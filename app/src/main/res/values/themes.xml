@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.SoccerShoesStore" parent="Base.Theme.SoccerShoesStore" />
+    <style name="SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splashscreen</item>
+        <item name="android:statusBarColor" >?attr/colorPrimary</item>
+    </style>
 </resources>
