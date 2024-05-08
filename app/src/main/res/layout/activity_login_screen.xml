@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpScreen">
+    tools:context=".LoginScreen">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -17,50 +17,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4">
+            android:layout_weight="10">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_logo" />
 
             <TextView
                 android:id="@+id/tv_lable_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
                 android:fontFamily="@font/baloo"
-                android:text="Sign Up"
+                android:text="Log In"
                 android:textColor="#BA43E4"
                 android:textSize="50sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.13"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="Name" />
-
-        <EditText
-            android:id="@+id/et_signup_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/background_input"
-            android:ems="10"
-            android:inputType="text"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="10dp" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/textView3"
@@ -111,28 +95,21 @@
             android:paddingBottom="10dp" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tv_login_forgotpassword"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="Confirm Password" />
-
-        <EditText
-            android:id="@+id/et_signup_confirmpassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/background_input"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="10dp" />
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="Forgot password" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="15dp"
+            android:layout_weight="2"
+            android:text="Login" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -143,10 +120,10 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Already have an account?"
+                android:text="Don't have an account?"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.63"
+                app:layout_constraintHorizontal_bias="0.37"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -155,34 +132,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:text="Login Now!"
+                android:text="Sign up Now"
                 android:textColor="#650487"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.24"
+                app:layout_constraintHorizontal_bias="0.151"
                 app:layout_constraintStart_toEndOf="@+id/textView6"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="15dp"
-            android:layout_weight="3"
-            android:text="Sign up" />
-
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/signup_pbar"
+        android:id="@+id/login_pbar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
