@@ -87,30 +87,43 @@ public class SignUpScreen extends AppCompatActivity {
                     Toast.makeText(SignUpScreen.this,"Confirm password is incorrect",Toast.LENGTH_SHORT).show();
                     return;
                 }else {
-                    mAuth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    progressBar.setVisibility(View.GONE);
+                    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-                                    if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
-//                                        Log.d(TAG, "createUserWithEmail:success");
-                                        Toast.makeText(SignUpScreen.this, "Sign up successful!",
-                                                Toast.LENGTH_SHORT).show();
-                                        SignUpScreen.super.onBackPressed();
-//                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        FirebaseAuth.getInstance().signOut();
-                                        
+                    // Kiểm tra chuỗi email có khớp với biểu thức chính quy không
+                    if(email.matches(emailPattern)) {
+                        Toast.makeText(getApplicationContext(), "Valid email format", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(),Send_OTP_Screen.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        // Nếu không đúng định dạng, hiển thị Toast thông báo
+                        Toast.makeText(getApplicationContext(), "Invalid email format", Toast.LENGTH_SHORT).show();
+                    }
 
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                        Toast.makeText(SignUpScreen.this, "Sign up failed.",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+//                    mAuth.createUserWithEmailAndPassword(email, password)
+//                            .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<AuthResult> task) {
+//                                    progressBar.setVisibility(View.GONE);
+//
+//                                    if (task.isSuccessful()) {
+//                                        // Sign in success, update UI with the signed-in user's information
+////                                        Log.d(TAG, "createUserWithEmail:success");
+//                                        Toast.makeText(SignUpScreen.this, "Sign up successful!",
+//                                                Toast.LENGTH_SHORT).show();
+//                                        SignUpScreen.super.onBackPressed();
+////                                        FirebaseUser user = mAuth.getCurrentUser();
+//                                        FirebaseAuth.getInstance().signOut();
+//
+//
+//                                    } else {
+//                                        // If sign in fails, display a message to the user.
+//                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+//                                        Toast.makeText(SignUpScreen.this, "Sign up failed.",
+//                                                Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//                            });
                 }
             }
         });
