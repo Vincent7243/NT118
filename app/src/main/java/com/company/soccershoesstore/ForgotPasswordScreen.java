@@ -33,6 +33,8 @@ public class ForgotPasswordScreen extends AppCompatActivity {
                 // Kiểm tra chuỗi email có khớp với biểu thức chính quy không
                 if(email.matches(emailPattern)) {
                     Toast.makeText(getApplicationContext(), "Valid email format", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(),Send_OTP_Screen.class);
+                    startActivity(intent);
                 }
                 else {
                     // Nếu không đúng định dạng, hiển thị Toast thông báo
