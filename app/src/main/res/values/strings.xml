@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Soccer Shoes Store</string>
+    <string name="action_home"> Home </string>
+    <string name="action_love"> Love </string>
+    <string name="action_person"> Person </string>
+    <string name="action_notification"> Notification </string>
+    <string name="action_cozy"> Cozy </string>
 </resources>
