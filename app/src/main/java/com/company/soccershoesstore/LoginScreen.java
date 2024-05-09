@@ -61,6 +61,14 @@ public class LoginScreen extends AppCompatActivity {
 //                finish();
             }
         });
+        tv_forgotpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),ForgotPasswordScreen.class);
+                startActivity(intent);
+
+            }
+        });
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
