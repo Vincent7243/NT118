@@ -2,6 +2,7 @@ package com.company.soccershoesstore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,12 +13,18 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class BottomNavigationBar extends AppCompatActivity {
 
+    private BottomNavigationView mNavigationView;
+    private ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_navigation_bar);
-        BottomNavigationView navigationView = findViewById(R.id.bottom_navigation_bar);
-        navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        mNavigationView = findViewById(R.id.bottom_navigation_bar);
+        mViewPager = findViewById(R.id.view_pager);
+
+        setUpViewPager();
+        mNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -40,5 +47,9 @@ public class BottomNavigationBar extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void setUpViewPager(){
+
     }
 }
