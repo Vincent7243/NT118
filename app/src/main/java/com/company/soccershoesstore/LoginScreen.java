@@ -36,9 +36,7 @@ public class LoginScreen extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
-            finish();
+            gotomain();
         }
     }
     @Override
@@ -95,9 +93,7 @@ public class LoginScreen extends AppCompatActivity {
 //                                        Log.d(TAG, "signInWithEmail:success");
                                         Toast.makeText(LoginScreen.this, "Login Successful.",
                                                 Toast.LENGTH_SHORT).show();
-                                        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        gotomain();
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -110,5 +106,10 @@ public class LoginScreen extends AppCompatActivity {
                 }
             }
         });
+    }
+    private void gotomain() {
+        Intent intent=new Intent(getApplicationContext(), BottomNavigationBar.class);
+        startActivity(intent);
+        finish();
     }
 }
