@@ -16,18 +16,32 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.company.soccershoesstore.util.Appdata;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Properties;
+import java.util.Random;
+
+import javax.activation.MimeType;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 public class SignUpScreen extends AppCompatActivity {
     EditText etnanme,etemail,etpassword,etconfirmpassword;
     TextView tv_toLogin;
     Button btn_signup;
     ProgressBar progressBar;
-     FirebaseAuth mAuth;
 //    @Override
 //    public void onStart() {
 //        super.onStart();
@@ -43,7 +57,6 @@ public class SignUpScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_screen);
-        mAuth = FirebaseAuth.getInstance();
         etnanme=findViewById(R.id.et_signup_name);
         etemail=findViewById(R.id.et_login_email);
         etpassword=findViewById(R.id.et_login_pasword);
@@ -62,7 +75,6 @@ public class SignUpScreen extends AppCompatActivity {
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
                 String name,email,password,confirmpassword;
                 name=String.valueOf(etnanme.getText());
                 email=String.valueOf(etemail.getText());
@@ -91,30 +103,9 @@ public class SignUpScreen extends AppCompatActivity {
 
                     // Kiểm tra chuỗi email có khớp với biểu thức chính quy không
                     if(email.matches(emailPattern)) {
-                        mAuth.createUserWithEmailAndPassword(email, password)
-                                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        progressBar.setVisibility(View.GONE);
-
-                                        if (task.isSuccessful()) {
-                                            // Sign in success, update UI with the signed-in user's information
-//                                        Log.d(TAG, "createUserWithEmail:success");
-                                            Toast.makeText(SignUpScreen.this, "Sign up successful!",
-                                                    Toast.LENGTH_SHORT).show();
-                                            SignUpScreen.super.onBackPressed();
-//                                        FirebaseUser user = mAuth.getCurrentUser();
-                                            FirebaseAuth.getInstance().signOut();
-
-
-                                        } else {
-                                            // If sign in fails, display a message to the user.
-                                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                            Toast.makeText(SignUpScreen.this, task.getException().toString(),
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                        String otp=sendotpmail(email);
+                        Toast.makeText(getApplicationContext(), "Please check "+email, Toast.LENGTH_SHORT).show();
+                        gotoSendotp(otp,email,password);
                     }
                     else {
                         // Nếu không đúng định dạng, hiển thị Toast thông báo
@@ -127,4 +118,62 @@ public class SignUpScreen extends AppCompatActivity {
         });
 
     }
+private String sendotpmail(String email) {
+    int length = 6;
+    // Dãy ký tự mà mã OTP có thể chứa
+    String numbers = "0123456789";
+    // Random object
+    Random random = new Random();
+    // StringBuilder để xây dựng mã OTP
+    StringBuilder motp = new StringBuilder();
+
+    // Tạo mã OTP bằng cách chọn ngẫu nhiên các ký tự từ dãy ký tự
+    for (int i = 0; i < length; i++) {
+        motp.append(numbers.charAt(random.nextInt(numbers.length())));
+    }
+    String otp=motp.toString();
+    Properties properties=System.getProperties();
+    properties.put("mail.smtp.host", Appdata.Gmail_host);
+    properties.put("mail.smtp.port","465");
+    properties.put("mail.smtp.ssl.enable","true");
+    properties.put("mail.smtp.auth","true");
+    javax.mail.Session session= Session.getInstance(properties, new Authenticator() {
+        @Override
+        protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(Appdata.Sender_email_address,Appdata.Sender_email_password);
+        }
+    });
+    MimeMessage message=new MimeMessage(session);
+    try{
+        message.addRecipient(Message.RecipientType.TO,new InternetAddress(email));
+        message.setSubject("Verification in Soccer Shoes Shop");
+        message.setText("Here is your OTP: "+otp);
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Transport.send(message);
+                } catch (MessagingException e) {
+                    Log.e("er send",e.toString());
+                    Toast.makeText(getApplicationContext(), "er send:"+e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        thread.start();
+
+    } catch (MessagingException e) {
+        Log.e("er send",e.toString());
+        Toast.makeText(getApplicationContext(), "er send:"+e.toString(), Toast.LENGTH_SHORT).show();
+
+    }
+    return otp;
+}
+private void gotoSendotp(String otp,String email,String password) {
+        Intent intent=new Intent(SignUpScreen.this, Send_OTP_Screen.class);
+        intent.putExtra("otp",otp);
+        intent.putExtra("email",email);
+        intent.putExtra("password",password);
+        startActivity(intent);
+}
+
 }
