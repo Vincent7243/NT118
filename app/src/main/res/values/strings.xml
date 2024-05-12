@@ -1,3 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Soccer Shoes Store</string>
+
+    <string name="app_name" tools:ignore="DuplicateDefinition">app_ban_giay</string>
+
 </resources>

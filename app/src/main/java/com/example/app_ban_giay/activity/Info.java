@@ -1,4 +1,4 @@
-package com.company.soccershoesstore;
+package com.example.app_ban_giay.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +10,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.app_ban_giay.R;
 
-public class InfoScreen extends AppCompatActivity {
+public class Info extends AppCompatActivity {
     Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +20,9 @@ public class InfoScreen extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_info);
         Anhxa();
-        BacktoMain();
+        Quay_lai_Trang_chu();
     }
-    private void BacktoMain(){
+    private void Quay_lai_Trang_chu(){
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
