@@ -2,6 +2,7 @@ package com.company.soccershoesstore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
@@ -29,6 +30,8 @@ public class BottomNavigationBar extends AppCompatActivity {
         setUpViewPager();
         mNavigationView.setSelectedItemId(R.id.action_home);
         mNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_home_fill);
+        mViewPager.setCurrentItem(2);
+
         mNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
 
             @Override
@@ -47,19 +50,19 @@ public class BottomNavigationBar extends AppCompatActivity {
                 int itemId = item.getItemId();
                 if (itemId == R.id.action_cozy) {
                     item.setIcon(R.drawable.ic_cozy_fill);
-                    Toast.makeText(BottomNavigationBar.this, "Categories", Toast.LENGTH_SHORT).show();
+                    mViewPager.setCurrentItem(0);
                 } else if (itemId == R.id.action_love) {
                     item.setIcon(R.drawable.ic_love_fill);
-                    Toast.makeText(BottomNavigationBar.this, "Favorites", Toast.LENGTH_SHORT).show();
+                    mViewPager.setCurrentItem(1);
                 } else if (itemId == R.id.action_home) {
                     item.setIcon(R.drawable.ic_home_fill);
-                    Toast.makeText(BottomNavigationBar.this, "Home", Toast.LENGTH_SHORT).show();
+                    mViewPager.setCurrentItem(2);
                 } else if (itemId == R.id.action_notification) {
                     item.setIcon(R.drawable.ic_notification_fill);
-                    Toast.makeText(BottomNavigationBar.this, "Notification", Toast.LENGTH_SHORT).show();
+                    mViewPager.setCurrentItem(3);
                 } else if (itemId == R.id.action_person) {
                     item.setIcon(R.drawable.ic_person_fill);
-                    Toast.makeText(BottomNavigationBar.this, "Person", Toast.LENGTH_SHORT).show();
+                    mViewPager.setCurrentItem(4);
                 }
                 return true;
             }
@@ -83,7 +86,7 @@ public class BottomNavigationBar extends AppCompatActivity {
     }
 
     private void setUpViewPager(){
-        ViewPagerAdapter_BottomNavBar viewPagerAdapterBottomNavBar = new ViewPagerAdapter_BottomNavBar(getSupportFragmentManager(),getLifecycle());
-        //mViewPager.setAdapter(viewPagerAdapterBottomNavBar);
+        ViewPagerAdapter_BottomNavBar viewPagerAdapterBottomNavBar=new ViewPagerAdapter_BottomNavBar(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        mViewPager.setAdapter(viewPagerAdapterBottomNavBar);
     }
 }
