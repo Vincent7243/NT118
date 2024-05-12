@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class CategoriesHomeScreen extends AppCompatActivity {
+public class CategoryFragment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

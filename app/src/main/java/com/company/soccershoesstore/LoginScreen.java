@@ -108,7 +108,7 @@ public class LoginScreen extends AppCompatActivity {
         });
     }
     private void gotomain() {
-        Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent=new Intent(getApplicationContext(), BottomNavigationBar.class);
         startActivity(intent);
         finish();
     }

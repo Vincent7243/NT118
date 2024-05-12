@@ -27,6 +27,8 @@ public class BottomNavigationBar extends AppCompatActivity {
         mViewPager = findViewById(R.id.view_pager);
 
         setUpViewPager();
+        mNavigationView.setSelectedItemId(R.id.action_home);
+        mNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_home_fill);
         mNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
 
             @Override
