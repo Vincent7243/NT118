@@ -117,9 +117,15 @@ public class BottomNavigationBar extends AppCompatActivity {
                 for (int i = 0; i < menu.size(); i++) {
                     MenuItem menuItem = menu.getItem(i);
                     menuItem.setIcon(getUnfilledIcon(menuItem.getItemId()));
-                    MenuItem selectedItem = menu.getItem(position);
-                    selectedItem.setIcon(getFilledIcon(selectedItem.getItemId()));
                 }
+                MenuItem selectedItem = menu.getItem(position);
+                selectedItem.setIcon(getFilledIcon(selectedItem.getItemId()));
+
+                for (int i = 0; i < menu.size(); i++) {
+                    MenuItem menuItem = menu.getItem(i);
+                    menuItem.setChecked(false);
+                }
+                selectedItem.setChecked(true);
             }
             private int getFilledIcon(int itemId) {
                 if (itemId == R.id.action_cozy) {
