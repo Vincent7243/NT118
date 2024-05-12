@@ -3,6 +3,7 @@ package com.company.soccershoesstore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -80,6 +81,7 @@ public class BottomNavigationBar extends AppCompatActivity {
     }
 
     private void setUpViewPager(){
-
+        ViewPagerAdapter_BottomNavBar viewPagerAdapterBottomNavBar = new ViewPagerAdapter_BottomNavBar(getSupportFragmentManager(),getLifecycle());
+        //mViewPager.setAdapter(viewPagerAdapterBottomNavBar);
     }
 }
