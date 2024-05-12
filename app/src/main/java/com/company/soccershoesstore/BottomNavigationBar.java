@@ -20,6 +20,21 @@ public class BottomNavigationBar extends AppCompatActivity {
     private BottomNavigationView mNavigationView;
     private ViewPager mViewPager;
 
+    private int getUnfilledIcon(int itemId) {
+        if (itemId == R.id.action_cozy) {
+            return R.drawable.ic_cozy;
+        } else if (itemId == R.id.action_love) {
+            return R.drawable.ic_love;
+        } else if (itemId == R.id.action_home) {
+            return R.drawable.ic_home;
+        } else if (itemId == R.id.action_notification) {
+            return R.drawable.ic_notification;
+        } else if (itemId == R.id.action_person) {
+            return R.drawable.ic_person;
+        } else {
+            return -1;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,25 +113,30 @@ public class BottomNavigationBar extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-
-                switch(position) {
-                    case 0:
-                        mNavigationView.getMenu().findItem(R.id.action_cozy).setChecked(true);
-                        break;
-                    case 1:
-                        mNavigationView.getMenu().findItem(R.id.action_love).setChecked(true);
-                        break;
-                    case 2:
-                        mNavigationView.getMenu().findItem(R.id.action_home).setChecked(true);
-                        break;
-                    case 3:
-                        mNavigationView.getMenu().findItem(R.id.action_notification).setChecked(true);
-                        break;
-                    case 4:
-                        mNavigationView.getMenu().findItem(R.id.action_person).setChecked(true);
-                        break;
+                Menu menu = mNavigationView.getMenu();
+                for (int i = 0; i < menu.size(); i++) {
+                    MenuItem menuItem = menu.getItem(i);
+                    menuItem.setIcon(getUnfilledIcon(menuItem.getItemId()));
+                    MenuItem selectedItem = menu.getItem(position);
+                    selectedItem.setIcon(getFilledIcon(selectedItem.getItemId()));
                 }
             }
+            private int getFilledIcon(int itemId) {
+                if (itemId == R.id.action_cozy) {
+                    return R.drawable.ic_cozy_fill;
+                } else if (itemId == R.id.action_love) {
+                    return R.drawable.ic_love_fill;
+                } else if (itemId == R.id.action_home) {
+                    return R.drawable.ic_home_fill;
+                } else if (itemId == R.id.action_notification) {
+                    return R.drawable.ic_notification_fill;
+                } else if (itemId == R.id.action_person) {
+                    return R.drawable.ic_person_fill;
+                } else {
+                    return -1;
+                }
+            }
+
 
             @Override
             public void onPageScrollStateChanged(int state) {
