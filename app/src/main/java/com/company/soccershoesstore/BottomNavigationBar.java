@@ -9,6 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -85,8 +86,42 @@ public class BottomNavigationBar extends AppCompatActivity {
         });
     }
 
+
     private void setUpViewPager(){
         ViewPagerAdapter_BottomNavBar viewPagerAdapterBottomNavBar=new ViewPagerAdapter_BottomNavBar(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mViewPager.setAdapter(viewPagerAdapterBottomNavBar);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                switch(position) {
+                    case 0:
+                        mNavigationView.getMenu().findItem(R.id.action_cozy).setChecked(true);
+                        break;
+                    case 1:
+                        mNavigationView.getMenu().findItem(R.id.action_love).setChecked(true);
+                        break;
+                    case 2:
+                        mNavigationView.getMenu().findItem(R.id.action_home).setChecked(true);
+                        break;
+                    case 3:
+                        mNavigationView.getMenu().findItem(R.id.action_notification).setChecked(true);
+                        break;
+                    case 4:
+                        mNavigationView.getMenu().findItem(R.id.action_person).setChecked(true);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 }
