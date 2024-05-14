@@ -76,8 +76,9 @@ public class HomeFragment extends Fragment {
         rvhotsale.setAdapter(adapternewest);
         rvhotsale.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false));
         BannerViewPagerAdapter bannerViewPagerAdapter=new BannerViewPagerAdapter(bannerList);
-        mci.setViewPager(mviewPager);
+
         mviewPager.setAdapter(bannerViewPagerAdapter);
+        mci.setViewPager(mviewPager);
         mhandler.postDelayed(mrunnable,2000);
         mviewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
