@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class HomeFragment extends Fragment {
     private ViewPager mviewPager;
+    RecyclerView rvnewest;
+    RecyclerView rvhotsale;
     CircleIndicator mci;
     List<Banner> bannerList;
     private Handler mhandler= new Handler();
@@ -54,8 +58,23 @@ public class HomeFragment extends Fragment {
         mci=view.findViewById(R.id.idc_banner);
         bannerList=new ArrayList<>();
         bannerList.add(new Banner(R.drawable.banner1));
+        rvnewest=view.findViewById(R.id.rv_home_newest_product);
+        rvhotsale=view.findViewById(R.id.rv_home_hotsale_product);
         bannerList.add(new Banner(R.drawable.banner2));
         bannerList.add(new Banner(R.drawable.banner3));
+        ArrayList <ProductCard>productCards=new ArrayList<>();
+        productCards.add(new ProductCard("sp1",R.drawable.teamplate_san_pham,"20","BASAS BUMPER GUM EXT NE - LOW "));
+        productCards.add(new ProductCard("sp1",R.drawable.teamplate_san_pham,"20","BASAS BUMPER GUM EXT NE - LOW "));
+        productCards.add(new ProductCard("sp1",R.drawable.teamplate_san_pham,"20","BASAS BUMPER GUM EXT NE - LOW "));
+        productCards.add(new ProductCard("sp1",R.drawable.teamplate_san_pham,"20","BASAS BUMPER GUM EXT NE - LOW "));
+        productCards.add(new ProductCard("sp1",R.drawable.teamplate_san_pham,"20","BASAS BUMPER GUM EXT NE - LOW "));
+        productCards.add(new ProductCard("sp1",R.drawable.teamplate_san_pham,"20","BASAS BUMPER GUM EXT NE - LOW "));
+        productCards.add(new ProductCard("sp1",R.drawable.teamplate_san_pham,"20","BASAS BUMPER GUM EXT NE - LOW "));
+        CardProductAdapter adapternewest=new CardProductAdapter(view.getContext(),productCards);
+        rvnewest.setAdapter(adapternewest);
+        rvnewest.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false));
+        rvhotsale.setAdapter(adapternewest);
+        rvhotsale.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false));
         BannerViewPagerAdapter bannerViewPagerAdapter=new BannerViewPagerAdapter(bannerList);
         mci.setViewPager(mviewPager);
         mviewPager.setAdapter(bannerViewPagerAdapter);

@@ -1,24 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    layout_height=""
+    layout_width=""
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPagerbanner"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_marginTop="0dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <me.relex.circleindicator.CircleIndicator
-        android:id="@+id/idc_banner"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:visibility="visible"
-        app:ci_drawable="@drawable/bg_indicator_banner"
-        app:ci_gravity="center" />
-</LinearLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPagerbanner"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="0dp" />
+
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/idc_banner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:visibility="visible"
+            app:ci_drawable="@drawable/bg_indicator_banner"
+            app:ci_gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_newest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="NEWEST"
+            android:textColor="@color/home"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_home_newest_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tv_hotsale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="HOT SALE"
+            android:textColor="@color/home"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_home_hotsale_product"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
