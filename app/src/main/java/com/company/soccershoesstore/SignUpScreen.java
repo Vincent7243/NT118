@@ -98,6 +98,9 @@ public class SignUpScreen extends AppCompatActivity {
                 }else if(!password.equals(confirmpassword)) {
                     Toast.makeText(SignUpScreen.this,"Confirm password is incorrect",Toast.LENGTH_SHORT).show();
                     return;
+                }else if(password.length()<6) {
+                    Toast.makeText(SignUpScreen.this,"Please make sure your password is 6 characters or more ",Toast.LENGTH_SHORT).show();
+                    return;
                 }else {
                     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
