@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Home Fragment"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="30sp" />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerbanner"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginTop="0dp" />
 
-</RelativeLayout>
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/idc_banner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:visibility="visible"
+        app:ci_drawable="@drawable/bg_indicator_banner"
+        app:ci_gravity="center" />
+</LinearLayout>
