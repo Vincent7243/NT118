@@ -12,27 +12,35 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPagerbanner"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:layout_marginTop="0dp" />
+            android:layout_height="match_parent">
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPagerbanner"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginTop="0dp" >
 
-        <me.relex.circleindicator.CircleIndicator
-            android:id="@+id/idc_banner"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:visibility="visible"
-            app:ci_drawable="@drawable/bg_indicator_banner"
-            app:ci_gravity="center" />
+            </androidx.viewpager.widget.ViewPager>
+
+            <me.relex.circleindicator.CircleIndicator
+                android:id="@+id/idc_banner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:gravity="center_horizontal"
+                android:visibility="visible"
+                app:ci_drawable="@drawable/bg_indicator_banner"
+                app:ci_gravity="center" />
+        </FrameLayout>
+
 
         <TextView
             android:id="@+id/tv_newest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
             android:text="NEWEST"
             android:textColor="@color/home"
             android:textSize="18sp"
@@ -53,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:text="HOT SALE"
             android:textColor="@color/home"
             android:textSize="18sp"
