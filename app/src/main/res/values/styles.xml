@@ -6,4 +6,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="itemactive_bottomnavigation" parent="">
+<!--        <item name="itemActiveIndicatorStyle">@co</item>-->
+    </style>
 </resources>
