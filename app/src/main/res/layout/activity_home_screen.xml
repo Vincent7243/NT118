@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeScreen">
+    tools:context=".HomeFragment">
 
     <!---1/Trang chủ-->
     <androidx.drawerlayout.widget.DrawerLayout
@@ -22,12 +22,13 @@
                 android:background="#ff00dfff"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize">
-            <Button
-                android:id="@+id/info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="Thông tin cá nhân"/>
+                <Button
+                    android:id="@+id/Info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thông tin cá nhân"
+                    android:layout_gravity="right" />
+
             </androidx.appcompat.widget.Toolbar>
             <ViewFlipper
                 android:id="@+id/viewflipper"
@@ -39,47 +40,37 @@
             </ViewFlipper>
 
             <LinearLayout
-                android:background="#5992"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:textSize="20sp"
-                    android:layout_marginLeft="10dp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/holo_red_light"
-                    android:text="Sản phẩm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"
+                android:padding="10dp">
                 <Button
-                    android:id="@+id/Info"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/btn_nam"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Thong tin"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycleview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp">
-
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:layout_weight="1"
+                    android:text="Nam"/>
+                <Button
+                    android:id="@+id/btn_nu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nữ"/>
 
 
             </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleview_shooes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigationview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="start">
-
-            <ListView
-                android:id="@+id/Listviewmanhinhchinh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.navigation.NavigationView>
 
     </androidx.drawerlayout.widget.DrawerLayout>
 

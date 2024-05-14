@@ -13,7 +13,7 @@ public class InfoScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_info);
+        setContentView(R.layout.activity_info_screen);
         Anhxa();
         Back_to_home();
     }
