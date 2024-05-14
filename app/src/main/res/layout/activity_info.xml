@@ -62,12 +62,6 @@
             android:hint="Thiết lập ngay" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="---------------------------" />
-        android:text="---------------------------"
-        android:textColor="grey" />
 </LinearLayout>
 
 
