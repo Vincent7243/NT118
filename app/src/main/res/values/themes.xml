@@ -29,4 +29,11 @@
         <item name="android:colorForeground">#99FFFFFF</item>
     </style>
 
+    <!--Theme style for Private Account switch -->
+    <style name="privateAccountSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/notification</item>
+        <item name="colorSwitchThumbNormal">#FFFFFF</item>
+        <item name="android:colorForeground">#99FFFFFF</item>
+    </style>
+
 </resources>
