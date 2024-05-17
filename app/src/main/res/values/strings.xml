@@ -5,6 +5,8 @@
     <string name="action_person"> Account </string>
     <string name="action_notification"> Notifications </string>
     <string name="action_cozy"> Categories </string>
+    <string name="action_chat"> Chat </string>
+    <string name="action_cart"> Cart </string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

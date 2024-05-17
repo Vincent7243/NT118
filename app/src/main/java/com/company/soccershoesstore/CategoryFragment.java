@@ -34,7 +34,7 @@ public class CategoryFragment extends Fragment {
 
 //        FrameLayout đã được thêm ở activity_main.xml
 
-        // Thiết lập trình nghe sự kiện cho từng biểu tượng
+         //Thiết lập trình nghe sự kiện cho từng biểu tượng
         nikeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

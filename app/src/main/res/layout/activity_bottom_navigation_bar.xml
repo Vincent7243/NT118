@@ -22,4 +22,6 @@
         app:itemTextColor="@color/home"
         app:itemHorizontalTranslationEnabled="true"
         app:menu="@menu/menu_bottom_navigation" />
+    <include
+        layout="@layout/activity_top_navigation_bar"/>
 </RelativeLayout>
