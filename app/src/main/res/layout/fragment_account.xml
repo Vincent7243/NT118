@@ -1,224 +1,345 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/account"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#F4F1F1"
+    tools:context=".AccountFragment">
 
-    <RelativeLayout
+    <androidx.drawerlayout.widget.DrawerLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:id="@+id/layout_full">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/back_btn"
-            android:padding="14dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Settings"
-            android:textColor="#FFFFFF"
-            android:layout_centerInParent="true"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
-
-    </RelativeLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/profile"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="10" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="Dat"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp"
-                android:textStyle="bold"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0347394003"
-                android:textColor="#CCFFFFFF"
-                android:textSize="12sp"
-                android:layout_gravity="center"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:paddingStart="30dp"
-                android:layout_gravity="center"
-                android:background="@drawable/round_back_secondary_100"
-                android:text="Edit Profile"
-                android:textAllCaps="false"
-                android:textColor="@color/primary"
-                android:paddingEnd="30dp"/>
-
-            <LinearLayout
-                android:background="@drawable/roung_back_white10_20"
+            <ScrollView
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/shape_home_top">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/anh"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginBottom="30dp"
+                                android:id="@+id/img_avata_home"/>
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="30dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Xin chào"
+                                    android:layout_marginLeft="10dp"
+                                    android:textSize="20dp"
+                                    android:textColor="@color/white"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Bùi Thanh Tuyền"
+                                    android:textSize="25dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:id="@+id/txt_user_home"/>
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:layout_marginBottom="30dp">
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginLeft="30dp"
+                            android:orientation="vertical"
+                            android:background="@drawable/shape_center_home"
+                            android:layout_marginTop="140dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginLeft="20dp"
+                                android:background="#C3BEBE"/>
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="3"
+                                android:orientation="horizontal"
+                                android:gravity="center">
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="match_parent"
+                                    android:gravity="center"
+                                    android:padding="20dp"
+                                    android:orientation="vertical"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
+
+                                    <ImageButton
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/ic_baseline_sync_problem_24"
+                                        android:background="@null"
+                                        android:scaleType="fitXY"
+                                        android:id="@+id/imgbt_dangxuly"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Đang xử lý"
+                                        android:textSize="15dp"
+                                        android:gravity="center"
+                                        android:textColor="#f000"
+                                        android:layout_marginTop="10dp"/>
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="match_parent"
+                                    android:gravity="center"
+                                    android:padding="20dp"
+                                    android:orientation="vertical"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
+
+                                    <ImageButton
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/ic_baseline_sync_24"
+                                        android:background="@null"
+                                        android:scaleType="fitXY"
+                                        android:id="@+id/imgbt_daxuly"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Đã xử lý"
+                                        android:textSize="15dp"
+                                        android:textColor="#f000"
+                                        android:layout_marginTop="10dp"/>
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="match_parent"
+                                    android:gravity="center"
+                                    android:padding="20dp"
+                                    android:orientation="vertical"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
+
+                                    <ImageButton
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/ic_baseline_shopping_cart_24"
+                                        android:background="@null"
+                                        android:scaleType="fitXY"
+                                        android:id="@+id/imgbt_giohang"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Giỏ hàng"
+                                        android:textSize="15dp"
+                                        android:textColor="#f000"
+                                        android:layout_marginTop="10dp"/>
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </FrameLayout>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5pt"
+                            android:padding="5pt"
+                            android:id="@+id/doiavata"
+                            android:background="@drawable/shape_vien_list_uudai"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_baseline_add_a_photo_24"
+                                android:id="@+id/img_doiavata"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Đổi ảnh đại diện"
+                                android:textSize="20dp"
+                                android:layout_marginLeft="10pt"
+                                android:textColor="#f000"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5pt"
+                            android:padding="5pt"
+                            android:id="@+id/doiten"
+                            android:background="@drawable/shape_vien_list_uudai"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_baseline_drive_file_rename_outline_24"
+                                android:id="@+id/img_doiten"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Đổi tên tài khoản"
+                                android:textSize="20dp"
+                                android:layout_marginLeft="10pt"
+                                android:textColor="#f000"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5pt"
+                            android:padding="5pt"
+                            android:id="@+id/doimatkhau"
+                            android:background="@drawable/shape_vien_list_uudai"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_baseline_password_24"
+                                android:id="@+id/img_mk"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Đổi mật khẩu"
+                                android:textSize="20dp"
+                                android:layout_marginLeft="10pt"
+                                android:textColor="#f000"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5pt"
+                            android:padding="5pt"
+                            android:id="@+id/dangxuat"
+                            android:background="@drawable/shape_vien_list_uudai"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_baseline_logout_24"
+                                android:id="@+id/img_log_out"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Đăng xuất"
+                                android:textSize="20dp"
+                                android:layout_marginLeft="10pt"
+                                android:textColor="#f000"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </ScrollView>
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#F8E42E"
+            android:layout_gravity="start"
+            android:id="@+id/navigationview">
+
+
+            <ListView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="40dp"
-                android:orientation="vertical"
-                android:padding="15dp">
+                android:id="@+id/list_menu"/>
 
-                <!--Dark Mode / Night Mode-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+        </com.google.android.material.navigation.NavigationView>
 
-                </RelativeLayout>
-
-                <!--Notification-->
-                <RelativeLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/notificationIcon"
-                        android:src="@drawable/nightmode_icon"
-                        android:background="@drawable/round_back_notifications"
-                        android:padding="12dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"
-                        android:text="Notifications"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/notificationIcon"/>
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        app:switchMinWidth="50dp"
-                        android:theme="@style/notificationsSwitch"/>
-                </RelativeLayout>
-                <!--Private Account-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/roung_back_private_account"
-                        android:padding="12dp"
-                        android:id="@+id/privateAccountIcon"
-                        android:src="@drawable/nightmode_icon"/>
-
-                    <TextView
-                        android:layout_marginStart="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Private Account"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"
-                        android:layout_toEndOf = "@+id/privateAccountIcon"/>
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        app:switchMinWidth="50dp"
-                        android:theme="@style/privateAccountSwitch"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/nightModeIcon"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/nightmode_icon"
-                        android:padding="12dp"
-                        android:background="@drawable/round_back_night_mode" />
-
-                    <Switch
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:switchMinWidth="50dp"
-                        android:theme="@style/nightModeSwitch"/>
-                </RelativeLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:background="@drawable/roung_back_white10_20"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="40dp"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <!--Security-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/round_back_security"
-                        android:padding="12dp"
-                        android:id="@+id/securityIcon"
-                        android:src="@drawable/security_icon"/>
-
-                    <TextView
-                        android:layout_marginStart="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Security and privacy"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"
-                        android:layout_toEndOf = "@+id/securityIcon"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/right_arrow_icon"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"/>
-                </RelativeLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
