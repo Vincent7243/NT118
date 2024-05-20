@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_cozy"
+        android:icon="@drawable/ic_cozy"
+        android:title="@string/action_cozy"/>
+
+
+    <item
+        android:id="@+id/action_love"
+        android:icon="@drawable/ic_love"
+        android:title="@string/action_love" />
+
+    <item
+        android:id="@+id/action_home"
+        android:checked="true"
+        android:icon="@drawable/ic_home"
+        android:title="@string/action_home" />
+
+    <item
+        android:id="@+id/action_notification"
+        android:checked="false"
+        android:icon="@drawable/ic_notification"
+        android:ellipsize="marquee"
+        android:title="@string/action_notification" />
+
+    <item
+        android:id="@+id/action_person"
+        android:checked="false"
+        android:icon="@drawable/ic_person"
+        android:title="@string/action_person" />
+</menu>
