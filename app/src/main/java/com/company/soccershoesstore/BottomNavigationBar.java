@@ -2,12 +2,15 @@ package com.company.soccershoesstore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -16,7 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class BottomNavigationBar extends AppCompatActivity {
-
+    private Toolbar toolbar;
     private BottomNavigationView mNavigationView;
     private ViewPager mViewPager;
 
@@ -42,6 +45,9 @@ public class BottomNavigationBar extends AppCompatActivity {
         setContentView(R.layout.activity_bottom_navigation_bar);
         mNavigationView = findViewById(R.id.bottom_navigation_bar);
         mViewPager = findViewById(R.id.view_pager);
+        toolbar = findViewById(R.id.myToolBar);
+        setSupportActionBar(toolbar);
+        setTitle("");
 
         setUpViewPager();
         mNavigationView.setSelectedItemId(R.id.action_home);
@@ -149,5 +155,27 @@ public class BottomNavigationBar extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_top_navigation, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_chat) {
+            Intent chatIntent = new Intent(this, ChatActivity.class);
+            startActivity(chatIntent);
+            return true;
+        } else if (id == R.id.action_cart) {
+            Intent cartIntent = new Intent(this, CartActivity.class);
+            startActivity(cartIntent);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

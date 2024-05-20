@@ -36,6 +36,9 @@
             android:name=".SignUpScreen"
             android:exported="false" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".ChatActivity"/>
+        <activity android:name=".CartActivity"/>
+
         <activity
             android:name=".SplashScreen"
             android:exported="true"
