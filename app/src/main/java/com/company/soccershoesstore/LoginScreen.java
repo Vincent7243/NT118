@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class LoginScreen extends AppCompatActivity {
 
@@ -108,7 +109,16 @@ public class LoginScreen extends AppCompatActivity {
         });
     }
     private void gotomain() {
-        Intent intent=new Intent(getApplicationContext(), BottomNavigationBar.class);
+        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        Intent intent;
+
+        if(user.getEmail().toString().equals("donhan23456@gmail.com")) {
+            intent=new Intent(getApplicationContext(), AdminActivity.class);
+
+        }else {
+             intent=new Intent(getApplicationContext(), BottomNavigationBar.class);
+        }
+
         startActivity(intent);
         finish();
     }
