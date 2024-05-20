@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_chat"
-        android:icon="@drawable/ic_chat"
+        android:icon="@drawable/ic_chat_fill"
         android:title="@string/action_chat"
         app:showAsAction="ifRoom"/>
     <item android:id="@+id/action_cart"
-        android:icon="@drawable/ic_cart"
+        android:icon="@drawable/ic_cart_fill"
         android:title="@string/action_cart"
         app:showAsAction="ifRoom"/>
 </menu>

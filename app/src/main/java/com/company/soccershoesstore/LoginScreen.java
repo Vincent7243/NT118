@@ -109,6 +109,7 @@ public class LoginScreen extends AppCompatActivity {
         });
     }
     private void gotomain() {
+
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         Intent intent;
 
@@ -116,8 +117,9 @@ public class LoginScreen extends AppCompatActivity {
             intent=new Intent(getApplicationContext(), AdminActivity.class);
 
         }else {
-             intent=new Intent(getApplicationContext(), BottomNavigationBar.class);
+            intent=new Intent(getApplicationContext(), BottomNavigationBar_and_TopNav.class);
         }
+
 
         startActivity(intent);
         finish();

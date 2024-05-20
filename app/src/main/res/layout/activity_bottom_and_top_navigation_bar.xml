@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BottomNavigationBar">
-
+    tools:context=".BottomNavigationBar_and_TopNav">
 
 
     <androidx.viewpager.widget.ViewPager
@@ -14,7 +13,8 @@
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation_bar"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_bar"
@@ -27,13 +27,18 @@
         app:itemActiveIndicatorStyle="@style/itemactive_bottomnavigation"
         app:itemHorizontalTranslationEnabled="true"
         app:menu="@menu/menu_bottom_navigation" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/myToolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="0dp"
-        android:background="@color/light_blue_600"
+        android:layout_marginEnd="0dp"
         app:menu="@menu/menu_top_navigation"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 <!--    <include-->
