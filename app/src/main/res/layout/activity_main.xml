@@ -30,5 +30,10 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <include
+        layout="@layout/activity_bottom_navigation_bar"/>
+    <include
+        layout="@layout/activity_top_navigation_bar"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
