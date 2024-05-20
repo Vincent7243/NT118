@@ -24,7 +24,7 @@
 
         <activity
 
-            android:name=".BottomNavigationBar"
+            android:name=".BottomNavigationBar_and_TopNav"
             android:exported="false" />
         <activity
             android:name=".Send_OTP_Screen"

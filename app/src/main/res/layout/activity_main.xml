@@ -27,9 +27,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.62" />
     <include
-        layout="@layout/activity_bottom_navigation_bar"/>
-    <include
-        layout="@layout/activity_top_navigation_bar"
-        />
+        layout="@layout/activity_bottom_and_top_navigation_bar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

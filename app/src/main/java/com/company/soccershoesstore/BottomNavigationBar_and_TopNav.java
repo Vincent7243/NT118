@@ -5,20 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class BottomNavigationBar extends AppCompatActivity {
+public class BottomNavigationBar_and_TopNav extends AppCompatActivity {
     private Toolbar toolbar;
     private BottomNavigationView mNavigationView;
     private ViewPager mViewPager;
@@ -42,7 +39,7 @@ public class BottomNavigationBar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bottom_navigation_bar);
+        setContentView(R.layout.activity_bottom_and_top_navigation_bar);
         mNavigationView = findViewById(R.id.bottom_navigation_bar);
         mViewPager = findViewById(R.id.view_pager);
         toolbar = findViewById(R.id.myToolBar);
