@@ -1,5 +1,6 @@
 package com.company.soccershoesstore;
 
+import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,7 +36,7 @@ public class AdminProductFragment extends Fragment {
     ImageButton ib_add;
     RecyclerView rv;
     ArrayList<Product> products;
-    ProductListAdapter adapter;
+    public ProductListAdapter adapter;
     FirebaseFirestore db;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,7 +75,15 @@ public class AdminProductFragment extends Fragment {
         ib_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(view.getContext(),"success",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(view.getContext(),activity_admin_product_edit.class);
+                intent.putExtra("mid","");
+                intent.putExtra("mname","");
+                intent.putExtra("mimage","");
+                intent.putExtra("mdescription","");
+                intent.putExtra("mbrand","");
+                intent.putExtra("mprice","");
+
+                startActivity(intent);
             }
         });
         return view;

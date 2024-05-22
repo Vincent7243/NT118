@@ -3,6 +3,7 @@ package com.company.soccershoesstore;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.util.Log;
@@ -57,6 +58,8 @@ private ArrayList<Product> mproducts;
             @Override
             public void onSuccess(Uri uri) {
                 String res= uri.toString();
+                Log.d("imgaefirebase","thành cong");
+
                 Glide.with(mcontext)
                         .load(res)
                         .into(holder.iv);
@@ -66,13 +69,21 @@ private ArrayList<Product> mproducts;
             @Override
             public void onFailure(@NonNull Exception e) {
                Toast.makeText(mcontext,e.toString(),Toast.LENGTH_SHORT).show();
-
+                Log.d("imgaefirebase",e.getMessage());
             }
         });
         holder.ib_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mcontext,""+position, Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(mcontext.getApplicationContext(),activity_admin_product_edit.class);
+                intent.putExtra("mid",product.getMid());
+                intent.putExtra("mname",product.getMname());
+                intent.putExtra("mimage",product.getMimage());
+                intent.putExtra("mdescription",product.getMdescription());
+                intent.putExtra("mbrand",product.getMbrand());
+                intent.putExtra("mprice",product.getMprice());
+
+                mcontext.startActivity(intent);
             }
         });
         holder.ib_delete.setOnClickListener(new View.OnClickListener() {
