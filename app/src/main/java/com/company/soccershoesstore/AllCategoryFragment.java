@@ -9,9 +9,16 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import java.util.ArrayList;
+
 
 public class AllCategoryFragment extends Fragment {
     public Button BackPress;
+    private RecyclerView recyclerView;
+    private AllCategoryFragmentAdapter adapter;
+    private ArrayList<Product> productList;
 
     @Nullable
     @Override
@@ -25,7 +32,15 @@ public class AllCategoryFragment extends Fragment {
                 getParentFragmentManager().popBackStack();
             }
         });
-
         return view;
+
+//        if (getArguments() != null) {
+//            productList = getArguments().getParcelableArrayList("products");
+//        }
+//        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+//        adapter = new AllCategoryFragmentAdapter(getContext(), productList);
+//        recyclerView.setAdapter(adapter);
+//
+//        return view;
     }
 }

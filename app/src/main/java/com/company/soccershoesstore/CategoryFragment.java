@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.ArrayList;
+
 public class CategoryFragment extends Fragment {
     @Nullable
     @Override
@@ -28,28 +30,28 @@ public class CategoryFragment extends Fragment {
         nikeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(new AllCategoryFragment());
+                replaceFragmentWithProducts(getNikeProducts());
             }
         });
 
         adidasIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(new AllCategoryFragment());
+                replaceFragmentWithProducts(getAdidasProducts());
             }
         });
 
         pumaIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(new AllCategoryFragment());
+                replaceFragmentWithProducts(getPumaProducts());
             }
         });
 
         nbIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(new AllCategoryFragment());
+                replaceFragmentWithProducts(getNBProducts());
             }
         });
 
@@ -57,10 +59,51 @@ public class CategoryFragment extends Fragment {
         return view;
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragmentWithProducts(ArrayList<Product> products) {
+        AllCategoryFragment fragment = new AllCategoryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("products", products);
+        fragment.setArguments(bundle);
+
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.categories_fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private ArrayList<Product> getNikeProducts() {
+        // Tạo danh sách sản phẩm Nike
+        ArrayList<Product> products = new ArrayList<>();
+        products.add(new Product("Nike Shoe 1", "url_to_image_1"));
+        products.add(new Product("Nike Shoe 2", "url_to_image_2"));
+        // Thêm các sản phẩm khác
+        return products;
+    }
+
+    private ArrayList<Product> getAdidasProducts() {
+        // Tạo danh sách sản phẩm Adidas
+        ArrayList<Product> products = new ArrayList<>();
+        products.add(new Product("Adidas Shoe 1", "url_to_image_1"));
+        products.add(new Product("Adidas Shoe 2", "url_to_image_2"));
+        // Thêm các sản phẩm khác
+        return products;
+    }
+
+    private ArrayList<Product> getPumaProducts() {
+        // Tạo danh sách sản phẩm Puma
+        ArrayList<Product> products = new ArrayList<>();
+        products.add(new Product("Puma Shoe 1", "url_to_image_1"));
+        products.add(new Product("Puma Shoe 2", "url_to_image_2"));
+        // Thêm các sản phẩm khác
+        return products;
+    }
+
+    private ArrayList<Product> getNBProducts() {
+        // Tạo danh sách sản phẩm NB
+        ArrayList<Product> products = new ArrayList<>();
+        products.add(new Product("NB Shoe 1", "url_to_image_1"));
+        products.add(new Product("NB Shoe 2", "url_to_image_2"));
+        // Thêm các sản phẩm khác
+        return products;
     }
 }
