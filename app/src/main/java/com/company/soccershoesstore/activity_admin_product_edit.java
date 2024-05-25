@@ -1,6 +1,8 @@
 package com.company.soccershoesstore;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +29,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 public class activity_admin_product_edit extends AppCompatActivity {
     String proid,proname,proimage,prodescription,proprice,probrand;
@@ -34,6 +39,8 @@ public class activity_admin_product_edit extends AppCompatActivity {
     ImageView iv;
     Button btn_change;
     EditText et_brand,et_name,et_price,et_description;
+    FirebaseStorage storage ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +64,7 @@ public class activity_admin_product_edit extends AppCompatActivity {
         et_brand.setText(probrand);
         et_description.setText(prodescription);
         et_price.setText(proprice);
+        storage= FirebaseStorage.getInstance("gs://nt118-6829d.appspot.com");
         ib_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +110,8 @@ public class activity_admin_product_edit extends AppCompatActivity {
             public void onClick(View v) {
                 if(TextUtils.isEmpty(et_brand.getText())||TextUtils.isEmpty(et_price.getText())||TextUtils.isEmpty(et_name.getText())||TextUtils.isEmpty(et_description.getText())) {
                     Toast.makeText(getApplicationContext(),"Plese fill all information!",Toast.LENGTH_SHORT).show();
+                } else {
+                    addImage(iv);
                 }
             }
         });
@@ -119,5 +129,30 @@ public class activity_admin_product_edit extends AppCompatActivity {
                 }
             }
         }
+    }
+    public void addImage(ImageView imageView) {
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child(System.currentTimeMillis()+".png");
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(),"Lưu thất bại",Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getApplicationContext(),"Lưu thành công",Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 }
