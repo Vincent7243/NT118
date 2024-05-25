@@ -17,7 +17,7 @@ public class ViewPagerAdapter_BottomNavBar extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new CategoryFragment();
+//                return new CategoryFragment();
             case 1:
                 return new FavoritesFragment();
             case 2:
