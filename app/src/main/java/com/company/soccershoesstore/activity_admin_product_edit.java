@@ -121,11 +121,11 @@ public class activity_admin_product_edit extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Plese fill all information!",Toast.LENGTH_SHORT).show();
                 } else if(proid.isEmpty()) {
                     ll.setVisibility(View.VISIBLE);
-                    addImage(iv,et_name.getText().toString(),et_description.getText().toString(),et_price.getText().toString(),et_brand.getText().toString());
+                    addProduct(iv,et_name.getText().toString(),et_description.getText().toString(),et_price.getText().toString(),et_brand.getText().toString());
 
                 } else {
-
-
+                    ll.setVisibility(View.VISIBLE);
+                    changImage(iv,proimage,proid,et_name.getText().toString(),et_description.getText().toString(),et_price.getText().toString(),et_brand.getText().toString());
                 }
             }
         });
@@ -144,7 +144,7 @@ public class activity_admin_product_edit extends AppCompatActivity {
             }
         }
     }
-    public void addImage(ImageView imageView,String name,String description,String price,String brand) {
+    public void addProduct(ImageView imageView,String name,String description,String price,String brand) {
         StorageReference storageRef = storage.getReference();
         StorageReference imageRef = storageRef.child(System.currentTimeMillis()+".png");
         imageView.setDrawingCacheEnabled(true);
@@ -199,6 +199,81 @@ public class activity_admin_product_edit extends AppCompatActivity {
                     }
                 });
     }
+    public void changImage(ImageView imageView,String img_old,String iid,String name,String description,String price,String brand) {
+        deleteImage(img_old);
+        StorageReference storageRef = storage.getReference();
+
+        StorageReference imageRef = storageRef.child(System.currentTimeMillis()+".png");
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(),"Edit product failed!!",Toast.LENGTH_SHORT).show();
+                ll.setVisibility(View.GONE);
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                String imagename="gs://nt118-6829d.appspot.com/"+imageRef.getName();
+                changeDocument(iid,name,description,imagename,price,brand);
+            }
+        });
+    }
+    public void deleteImage(String img) {
+        StorageReference storageRef = storage.getReferenceFromUrl(img);
+        storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("deleteimage","delete image sucessfull");
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Uh-oh, an error occurred!
+                Log.d("deleteimage","delete image failed+ "+exception);
+
+            }
+        });
+    }
+
+public void changeDocument(String iid,String name,String description,String image,String price,String brand) {
+    Map<String, Object> product = new HashMap<>();
+    product.put("name", name);
+    product.put("description", description);
+    product.put("image", image);
+    product.put("price", price);
+    product.put("brand", brand);
 
 
+    db.collection("Products").document(iid)
+            .set(product)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    ll.setVisibility(View.GONE);
+                    Log.d("editproduct", "DocumentSnapshot successfully written!");
+                    activity_admin_product_edit.super.onBackPressed();
+
+                    Toast.makeText(getApplicationContext(),"Edit product sucessful!",Toast.LENGTH_SHORT).show();
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    ll.setVisibility(View.GONE);
+
+                    Log.w("editproduct", "Error writing document", e);
+                    Toast.makeText(getApplicationContext(),"Edit product failed!",Toast.LENGTH_SHORT).show();
+
+                }
+            });
+}
 }

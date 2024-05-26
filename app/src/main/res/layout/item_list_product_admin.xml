@@ -6,6 +6,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/ii_admin_product_rowproduct"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_margin="5dp"

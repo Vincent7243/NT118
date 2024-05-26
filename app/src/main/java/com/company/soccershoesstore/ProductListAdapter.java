@@ -1,5 +1,6 @@
 package com.company.soccershoesstore;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,14 +46,30 @@ private ArrayList<Product> mproducts;
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater=LayoutInflater.from(mcontext);
         View productview=inflater.inflate(R.layout.item_list_product_admin,parent,false);
+
         ViewHolder viewHolder=new ViewHolder(productview);
         return viewHolder;
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Product product=mproducts.get(position);
+        holder.ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mcontext.getApplicationContext(),activity_admin_product_edit.class);
+                intent.putExtra("mid",product.getMid());
+                intent.putExtra("mname",product.getMname());
+                intent.putExtra("mimage",product.getMimage());
+                intent.putExtra("mdescription",product.getMdescription());
+                intent.putExtra("mbrand",product.getMbrand());
+                intent.putExtra("mprice",product.getMprice());
+
+                mcontext.startActivity(intent);
+            }
+        });
+
         holder.tv_name.setText(product.getMname());
         holder.tv_brand.setText(product.getMbrand());
         holder.tv_price.setText(product.getMprice()+"vnd");
@@ -122,6 +140,7 @@ public class ViewHolder extends RecyclerView.ViewHolder{
 ImageView iv;
 TextView tv_name,tv_brand,tv_price;
 ImageButton ib_delete,ib_edit;
+LinearLayout ll;
 
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -131,6 +150,7 @@ ImageButton ib_delete,ib_edit;
         tv_price=itemView.findViewById(R.id.tv_admin_product_item_price);
         ib_delete=itemView.findViewById(R.id.ib_admin_product_item_delete);
         ib_edit=itemView.findViewById(R.id.ib_admin_product_item_edit);
+        ll=itemView.findViewById(R.id.ii_admin_product_rowproduct);
     }
 }
     public void deletProduct(String iid) {
