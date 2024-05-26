@@ -124,7 +124,7 @@ public class activity_admin_product_edit extends AppCompatActivity {
                     addImage(iv,et_name.getText().toString(),et_description.getText().toString(),et_price.getText().toString(),et_brand.getText().toString());
 
                 } else {
-                    Toast.makeText(getApplicationContext(),"This is edit!",Toast.LENGTH_SHORT).show();
+
 
                 }
             }
@@ -158,7 +158,7 @@ public class activity_admin_product_edit extends AppCompatActivity {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(getApplicationContext(),"Lưu ảnh thất bại",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Save image failed!",Toast.LENGTH_SHORT).show();
 
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -184,7 +184,7 @@ public class activity_admin_product_edit extends AppCompatActivity {
                     public void onSuccess(DocumentReference documentReference) {
                         ll.setVisibility(View.GONE);
                         Log.d("add document product", "DocumentSnapshot added with ID: " + documentReference.getId());
-                        Toast.makeText(getApplicationContext(),"Lưu thành công",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Add product successful!",Toast.LENGTH_SHORT).show();
                         activity_admin_product_edit.super.onBackPressed();
                     }
                 })
@@ -194,9 +194,11 @@ public class activity_admin_product_edit extends AppCompatActivity {
                         ll.setVisibility(View.GONE);
 
                         Log.w("add document product", "Error adding document", e);
-                        Toast.makeText(getApplicationContext(),"Lưu thất bại",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Add product failed!",Toast.LENGTH_SHORT).show();
 
                     }
                 });
     }
+
+
 }

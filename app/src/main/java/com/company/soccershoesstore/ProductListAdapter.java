@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -30,6 +31,8 @@ import java.util.List;
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ViewHolder> {
 private Context mcontext;
 private ArrayList<Product> mproducts;
+    FirebaseFirestore db;
+    FirebaseStorage storage;
 
     public ProductListAdapter(Context mcontext, ArrayList<Product> mproducts) {
         this.mcontext = mcontext;
@@ -52,7 +55,8 @@ private ArrayList<Product> mproducts;
         holder.tv_name.setText(product.getMname());
         holder.tv_brand.setText(product.getMbrand());
         holder.tv_price.setText(product.getMprice()+"vnd");
-        FirebaseStorage storage = FirebaseStorage.getInstance("gs://nt118-6829d.appspot.com");
+        db=FirebaseFirestore.getInstance();
+         storage = FirebaseStorage.getInstance("gs://nt118-6829d.appspot.com");
         StorageReference storageRef = storage.getReferenceFromUrl(product.getMimage());
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -97,7 +101,8 @@ private ArrayList<Product> mproducts;
                         // The dialog is automatically dismissed when a dialog button is clicked.
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // Continue with delete operation
+                                deleteImage(product.getMimage(),product.getMid());
+
                             }
                         })
 
@@ -128,4 +133,51 @@ ImageButton ib_delete,ib_edit;
         ib_edit=itemView.findViewById(R.id.ib_admin_product_item_edit);
     }
 }
+    public void deletProduct(String iid) {
+        db.collection("Products").document(iid)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("deleteProduct", "DocumentSnapshot successfully deleted!");
+                        if (mListener != null) {
+                            mListener.onProductDeleted();
+                            Toast.makeText(mcontext,"Delete successful!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("deleteProduct", "Error deleting document", e);
+                        Toast.makeText(mcontext,"Delete failed!!",Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    public void deleteImage(String img,String iid) {
+        StorageReference storageRef = storage.getReferenceFromUrl(img);
+        storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("deleteimage","delete image sucessfull");
+                deletProduct(iid);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Uh-oh, an error occurred!
+                Log.d("deleteimage","delete image failed+ "+exception);
+
+            }
+        });
+    }
+    public interface OnProductDeleteListener {
+        void onProductDeleted();
+    }
+
+    private OnProductDeleteListener mListener;
+
+    public void setOnProductDeleteListener(OnProductDeleteListener listener) {
+        this.mListener = listener;
+    }
 }
