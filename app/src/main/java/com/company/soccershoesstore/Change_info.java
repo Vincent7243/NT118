@@ -1,3 +1,4 @@
+
 package com.company.soccershoesstore;
 
 import android.os.Bundle;
@@ -10,13 +11,8 @@ public class Change_info extends AppCompatActivity {
     Button button;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_change_info);
         button = findViewById(R.id.Back);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        button.setOnClickListener(v -> finish());
     }
 }

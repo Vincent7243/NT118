@@ -60,4 +60,7 @@ dependencies {
     implementation("me.relex:circleindicator:2.1.6")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.android.material:material:1.3.0-alpha03")
+    // https://mvnrepository.com/artifact/com.google.firebase/firebase-storage
+    implementation ("com.google.firebase:firebase-storage:21.0.0")
+
 }

@@ -16,18 +16,31 @@ import androidx.fragment.app.Fragment;
 
 public class AccountFragment extends Fragment {
     ImageButton imageButton;
+    private ImageButton imgTTDH;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_account,container,false);
+        View view = inflater.inflate(R.layout.fragment_account, container, false);
+        imageButton = view.findViewById(R.id.img_doiten);
+        imgTTDH = view.findViewById(R.id.img_TTDH);
         goToActivity();
+        goToTTDH();
         return view;
     }
+
     public void goToActivity() {
-        imageButton = imageButton.findViewById(R.id.img_doiten);
         imageButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), Change_info.class);
             startActivity(intent);
         });
     }
+
+    public void goToTTDH(){
+        imgTTDH.setOnClickListener(v -> {
+            Intent intent1 = new Intent(getActivity(), Change_info.class);
+            startActivity(intent1);
+})
+    ;}
 }
+
