@@ -50,25 +50,25 @@ public class AdminProductFragment extends Fragment {
 
 
         
-        db.collection("Products")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("firebasefirestore", document.getId() + " => " + document.getData());
-                                Log.d("firebasefirestore",  document.getData().get("name").toString());
-                                products.add(new Product(document.getId().toString(),document.getData().get("name").toString(),document.getData().get("price").toString(),document.getData().get("image").toString(),document.getData().get("description").toString(),document.getData().get("brand").toString()));
-                                adapter=new ProductListAdapter(view.getContext(),products);
-                                rv.setAdapter(adapter);
-                                rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                            }
-                        }else {
-                            Log.w("firebasefirestore", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
+//        db.collection("Products")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if(task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Log.d("firebasefirestore", document.getId() + " => " + document.getData());
+//                                Log.d("firebasefirestore",  document.getData().get("name").toString());
+//                                products.add(new Product(document.getId().toString(),document.getData().get("name").toString(),document.getData().get("price").toString(),document.getData().get("image").toString(),document.getData().get("description").toString(),document.getData().get("brand").toString()));
+//                                adapter=new ProductListAdapter(view.getContext(),products);
+//                                rv.setAdapter(adapter);
+//                                rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+//                            }
+//                        }else {
+//                            Log.w("firebasefirestore", "Error getting documents.", task.getException());
+//                        }
+//                    }
+//                });
 
 
 
@@ -88,4 +88,30 @@ public class AdminProductFragment extends Fragment {
         });
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        db.collection("Products")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                        products.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("firebasefirestore", document.getId() + " => " + document.getData());
+                                Log.d("firebasefirestore",  document.getData().get("name").toString());
+                                products.add(new Product(document.getId().toString(),document.getData().get("name").toString(),document.getData().get("price").toString(),document.getData().get("image").toString(),document.getData().get("description").toString(),document.getData().get("brand").toString()));
+                                adapter=new ProductListAdapter(getContext(),products);
+                                rv.setAdapter(adapter);
+                                rv.setLayoutManager(new LinearLayoutManager(getContext()));
+                            }
+                        }else {
+                            Log.w("firebasefirestore", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
 }

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,11 +28,15 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class activity_admin_product_edit extends AppCompatActivity {
     String proid,proname,proimage,prodescription,proprice,probrand;
@@ -40,6 +45,8 @@ public class activity_admin_product_edit extends AppCompatActivity {
     Button btn_change;
     EditText et_brand,et_name,et_price,et_description;
     FirebaseStorage storage ;
+    LinearLayout ll;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +71,9 @@ public class activity_admin_product_edit extends AppCompatActivity {
         et_brand.setText(probrand);
         et_description.setText(prodescription);
         et_price.setText(proprice);
+        ll=findViewById(R.id.ll_admin_edit_loading);
         storage= FirebaseStorage.getInstance("gs://nt118-6829d.appspot.com");
+        db = FirebaseFirestore.getInstance();
         ib_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,8 +119,13 @@ public class activity_admin_product_edit extends AppCompatActivity {
             public void onClick(View v) {
                 if(TextUtils.isEmpty(et_brand.getText())||TextUtils.isEmpty(et_price.getText())||TextUtils.isEmpty(et_name.getText())||TextUtils.isEmpty(et_description.getText())) {
                     Toast.makeText(getApplicationContext(),"Plese fill all information!",Toast.LENGTH_SHORT).show();
+                } else if(proid.isEmpty()) {
+                    ll.setVisibility(View.VISIBLE);
+                    addImage(iv,et_name.getText().toString(),et_description.getText().toString(),et_price.getText().toString(),et_brand.getText().toString());
+
                 } else {
-                    addImage(iv);
+                    Toast.makeText(getApplicationContext(),"This is edit!",Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -130,7 +144,7 @@ public class activity_admin_product_edit extends AppCompatActivity {
             }
         }
     }
-    public void addImage(ImageView imageView) {
+    public void addImage(ImageView imageView,String name,String description,String price,String brand) {
         StorageReference storageRef = storage.getReference();
         StorageReference imageRef = storageRef.child(System.currentTimeMillis()+".png");
         imageView.setDrawingCacheEnabled(true);
@@ -144,15 +158,45 @@ public class activity_admin_product_edit extends AppCompatActivity {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(getApplicationContext(),"Lưu thất bại",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Lưu ảnh thất bại",Toast.LENGTH_SHORT).show();
 
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getApplicationContext(),"Lưu thành công",Toast.LENGTH_SHORT).show();
-
+                String imagename="gs://nt118-6829d.appspot.com/"+imageRef.getName();
+                addDocument(name,description,imagename,price,brand);
             }
         });
+    }
+    public void addDocument(String name,String description,String image,String price,String brand){
+        Map<String, Object> product = new HashMap<>();
+        product.put("name", name);
+        product.put("description", description);
+        product.put("image", image);
+        product.put("price", price);
+        product.put("brand", brand);
+
+        db.collection("Products")
+                .add(product)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        ll.setVisibility(View.GONE);
+                        Log.d("add document product", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        Toast.makeText(getApplicationContext(),"Lưu thành công",Toast.LENGTH_SHORT).show();
+                        activity_admin_product_edit.super.onBackPressed();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        ll.setVisibility(View.GONE);
+
+                        Log.w("add document product", "Error adding document", e);
+                        Toast.makeText(getApplicationContext(),"Lưu thất bại",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
     }
 }
