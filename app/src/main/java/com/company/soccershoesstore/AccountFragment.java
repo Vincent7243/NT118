@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -25,12 +25,9 @@ public class AccountFragment extends Fragment {
     }
     public void goToActivity() {
         imageButton = imageButton.findViewById(R.id.img_doiten);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Change_info.class);
-                startActivity(intent);
-            }
+        imageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Change_info.class);
+            startActivity(intent);
         });
     }
 }
