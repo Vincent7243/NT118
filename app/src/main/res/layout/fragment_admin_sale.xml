@@ -9,6 +9,7 @@
         android:id="@+id/lv_admin_sale"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
         android:divider="#00EEEBF3" />
     <ImageButton
         android:id="@+id/ib_admin_sale_add"

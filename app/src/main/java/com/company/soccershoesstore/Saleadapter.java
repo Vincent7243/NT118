@@ -2,6 +2,7 @@ package com.company.soccershoesstore;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,6 +53,17 @@ public class Saleadapter extends ArrayAdapter<Sale> {
             public void onClick(View v) {
                 Toast.makeText(mcontext, "delete"+position, Toast.LENGTH_SHORT).show();
 
+            }
+        });
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mcontext.getApplicationContext(), activity_admin_sale_edit.class);
+                intent.putExtra("iid",sale.getMid());
+                intent.putExtra("mcode",sale.getMcode());
+                intent.putExtra("mprice",sale.getMprice());
+                intent.putExtra("mquantity",sale.getMquantity());
+                mcontext.startActivity(intent);
             }
         });
         return convertView;

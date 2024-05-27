@@ -3,7 +3,6 @@ package com.company.soccershoesstore;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,16 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -63,9 +57,9 @@ public class activity_admin_product_edit extends AppCompatActivity {
         ib_check=findViewById(R.id.ib_admin_product_edit_check);
         iv=findViewById(R.id.iv_admin_prouct_edit);
         btn_change=findViewById(R.id.btn_admin_product_edit_change);
-        et_name=findViewById(R.id.et_admin_product_edit_name);
-        et_brand=findViewById(R.id.et_admin_product_edit_brand);
-        et_price=findViewById(R.id.et_admin_product_edit_price);
+        et_name=findViewById(R.id.et_admin_sale_edit_price);
+        et_brand=findViewById(R.id.et_admin_sale_edit_code);
+        et_price=findViewById(R.id.et_admin_sale_edit_quantity);
         et_description=findViewById(R.id.et_admin_product_edit_description);
         et_name.setText(proname);
         et_brand.setText(probrand);
