@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -157,6 +159,24 @@ public class BottomNavigationBar_and_TopNav extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_top_navigation, menu);
+
+        MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(@NonNull MenuItem item) {
+                Toast.makeText(BottomNavigationBar_and_TopNav.this, "Search is Expanded", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(@NonNull MenuItem item) {
+                Toast.makeText(BottomNavigationBar_and_TopNav.this, "Search is Collapse", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        };
+        menu.findItem(R.id.action_search).setOnActionExpandListener(onActionExpandListener);
+        SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
+        assert searchView != null;
+        searchView.setQueryHint("Search Data here...");
         return true;
     }
     @Override
