@@ -5,11 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".AdminSaleFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/lv_admin_sale"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="SALE"
-        android:textSize="30sp"/>
-
+        android:divider="#00EEEBF3" />
+    <ImageButton
+        android:id="@+id/ib_admin_sale_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/circle_background_homecolor"
+        android:src="@drawable/ic_add" />
 </FrameLayout>
