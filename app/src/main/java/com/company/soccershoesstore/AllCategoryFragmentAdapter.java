@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +18,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategoryFragmentAdapter.ViewHolder> {
@@ -58,7 +61,58 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
                 // Xử lý khi có lỗi xảy ra khi lấy URL của hình ảnh
             }
         });
+        if (position == 0) {
+            holder.increasePriceButton.setVisibility(View.VISIBLE);
+            holder.decreasePriceButton.setVisibility(View.VISIBLE);
+        } else {
+            holder.increasePriceButton.setVisibility(View.GONE);
+            holder.decreasePriceButton.setVisibility(View.GONE);
+        }
+
+        holder.increasePriceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tăng giá tiền của sản phẩm
+                double currentPrice = Double.parseDouble(productList.get(position).getPrice());
+                double newPrice = currentPrice + 1; // Ví dụ tăng giá tiền lên 1 đơn vị
+                productList.get(position).setPrice(String.valueOf(newPrice));
+                // Sắp xếp lại danh sách sản phẩm theo giá tiền tăng dần
+                Collections.sort(productList, new Comparator<AllCategoryFragmentProduct>() {
+                    @Override
+                    public int compare(AllCategoryFragmentProduct o1, AllCategoryFragmentProduct o2) {
+                        double price1 = Double.parseDouble(o1.getPrice());
+                        double price2 = Double.parseDouble(o2.getPrice());
+                        return Double.compare(price1, price2);
+                    }
+                });
+                notifyDataSetChanged();
+            }
+        });
+
+        holder.decreasePriceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Giảm giá tiền của sản phẩm
+                double currentPrice = Double.parseDouble(productList.get(position).getPrice());
+                double newPrice = currentPrice - 1; // Ví dụ giảm giá tiền đi 1 đơn vị
+                if (newPrice < 0) {
+                    newPrice = 0; // Đảm bảo giá tiền không âm
+                }
+                productList.get(position).setPrice(String.valueOf(newPrice));
+                // Sắp xếp lại danh sách sản phẩm theo giá tiền giảm dần
+                Collections.sort(productList, new Comparator<AllCategoryFragmentProduct>() {
+                    @Override
+                    public int compare(AllCategoryFragmentProduct o1, AllCategoryFragmentProduct o2) {
+                        double price1 = Double.parseDouble(o1.getPrice());
+                        double price2 = Double.parseDouble(o2.getPrice());
+                        return Double.compare(price2, price1);
+                    }
+                });
+                notifyDataSetChanged();
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -72,6 +126,8 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
         public TextView productDescription;
         public TextView productPrice;
         public ImageView productImage;
+        public Button increasePriceButton; // Thêm thuộc tính increasePriceButton
+        public Button decreasePriceButton; // Thêm thuộc tính decreasePriceButton
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +136,8 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
             productDescription = itemView.findViewById(R.id.product_description);
             productPrice = itemView.findViewById(R.id.product_price);
             productImage = itemView.findViewById(R.id.product_image);
+            increasePriceButton = itemView.findViewById(R.id.increase_price_button); // Ánh xạ nút tăng giá tiền
+            decreasePriceButton = itemView.findViewById(R.id.decrease_price_button); // Ánh xạ nút giảm giá tiền
         }
     }
 }
