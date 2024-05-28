@@ -33,4 +33,12 @@
         android:paddingTop="4dp"
         android:textColor="@android:color/holo_red_dark"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/product_brand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:visibility="gone"
+        android:textStyle="italic" />
 </LinearLayout>

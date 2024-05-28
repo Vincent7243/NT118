@@ -38,6 +38,7 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AllCategoryFragmentProduct product = productList.get(position);
         holder.productName.setText(product.getName());
+        holder.productBrand.setText(product.getBrand());
         holder.productDescription.setText(product.getDescription());
         holder.productPrice.setText(product.getPrice());
 
@@ -66,6 +67,7 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        public TextView productBrand;
         public TextView productName;
         public TextView productDescription;
         public TextView productPrice;
@@ -74,6 +76,7 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.product_name);
+            productBrand = itemView.findViewById(R.id.product_brand);
             productDescription = itemView.findViewById(R.id.product_description);
             productPrice = itemView.findViewById(R.id.product_price);
             productImage = itemView.findViewById(R.id.product_image);
