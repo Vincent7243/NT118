@@ -105,6 +105,12 @@ public class BottomNavigationBar_and_TopNav extends AppCompatActivity {
 
         });
     }
+    private void toggleSearchMenuItem(boolean isVisible) {
+        MenuItem searchItem = toolbar.getMenu().findItem(R.id.action_search);
+        if (searchItem != null) {
+            searchItem.setVisible(isVisible);
+        }
+    }
 
 
     private void setUpViewPager(){
@@ -131,7 +137,15 @@ public class BottomNavigationBar_and_TopNav extends AppCompatActivity {
                     menuItem.setChecked(false);
                 }
                 selectedItem.setChecked(true);
+
+                // Kiểm tra nếu fragment hiện tại là Home
+                if (position == 2) { // 2 là vị trí của Home fragment
+                    toggleSearchMenuItem(true);
+                } else {
+                    toggleSearchMenuItem(false);
+                }
             }
+
             private int getFilledIcon(int itemId) {
                 if (itemId == R.id.action_cozy) {
                     return R.drawable.ic_cozy_fill;
@@ -177,8 +191,13 @@ public class BottomNavigationBar_and_TopNav extends AppCompatActivity {
         SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
         assert searchView != null;
         searchView.setQueryHint("Search Data here...");
+
+        // Ẩn nút tìm kiếm nếu không phải ở Home fragment
+        toggleSearchMenuItem(mViewPager.getCurrentItem() == 2);
+
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
