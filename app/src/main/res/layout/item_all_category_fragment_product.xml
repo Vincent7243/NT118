@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Layout chứa nút tăng và giảm giá tiền -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/increase_price_button"
+            android:layout_width="50dp"
+            android:layout_height="47dp"
+            android:drawableTop="@drawable/ic_arrow_up"
+            android:onClick="increasePrice" />
+
+        <Button
+            android:id="@+id/decrease_price_button"
+            android:layout_width="49dp"
+            android:layout_height="match_parent"
+            android:drawableTop="@drawable/ic_arrow_down"
+            android:onClick="decreasePrice" />
+    </LinearLayout>
+
+    <!-- Layout chứa thông tin sản phẩm -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Các phần tử khác như tên sản phẩm, hình ảnh, giá tiền, mô tả sẽ nằm ở đây -->
+
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingTop="8dp" />
+
+        <TextView
+            android:id="@+id/product_description"
+            android:maxLines="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp" />
+
+        <TextView
+            android:id="@+id/product_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/product_brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:visibility="gone"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+</LinearLayout>

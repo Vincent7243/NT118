@@ -28,28 +28,28 @@ public class CategoryFragment extends Fragment {
         nikeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(new AllCategoryFragment());
+                replaceFragment(new AllCategoryFragment(), "Nike");
             }
         });
 
         adidasIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(new AllCategoryFragment());
+                replaceFragment(new AllCategoryFragment(), "Adidas");
             }
         });
 
         pumaIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(new AllCategoryFragment());
+                replaceFragment(new AllCategoryFragment(), "Puma");
             }
         });
 
         nbIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(new AllCategoryFragment());
+                replaceFragment(new AllCategoryFragment(), "New Balance");
             }
         });
 
@@ -57,7 +57,11 @@ public class CategoryFragment extends Fragment {
         return view;
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment, String brand) {
+        Bundle bundle = new Bundle();
+        bundle.putString("brand", brand);
+        fragment.setArguments(bundle);
+
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.categories_fragment, fragment);
         transaction.addToBackStack(null);
