@@ -36,9 +36,10 @@ private ArrayList<Product> mproducts;
     FirebaseFirestore db;
     FirebaseStorage storage;
 
-    public ProductListAdapter(Context mcontext, ArrayList<Product> mproducts) {
-        this.mcontext = mcontext;
-        this.mproducts = mproducts;
+    public ProductListAdapter(Context context, ArrayList<Product> products, boolean isCancelledFragment) {
+        this.mContext = context;
+        this.mProducts = products;
+        this.isCancelledFragment = isCancelledFragment;
     }
 
     @NonNull
@@ -79,10 +80,9 @@ private ArrayList<Product> mproducts;
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                String res= uri.toString();
-                Log.d("imgaefirebase","thành cong");
-
-                Glide.with(mcontext)
+                String res = uri.toString();
+                Log.d("imageFirebase", "Thành công");
+                Glide.with(mContext)
                         .load(res)
                         .into(holder.iv);
 

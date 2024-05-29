@@ -54,6 +54,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ChangeUserInfoActivity"></activity>
+        <activity android:name=".OrderStatusActivity"></activity>
     </application>
 
 </manifest>
