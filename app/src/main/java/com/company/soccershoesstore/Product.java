@@ -65,5 +65,5 @@ public class Product {
         this.mbrand = mbrand;
     }
 
-//>>>>>>> 73e2bf679d5eedadb24347aea0fe4a453dbdfdc3
+
 }
