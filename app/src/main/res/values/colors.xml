@@ -18,8 +18,10 @@
     <color name="ic_delete">#E72929</color>
     <color name="yellow">#F3CA52</color>
 
-    <color name="night_mode">#6124B1</color>
-    <color name="notification">#13B2C3</color>
-    <color name="private_account">#E6A326</color>
-    <color name="security">#D95F69</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorCardBackground">#FFFFFF</color>
+    <color name="colorTextPrimary">#000000</color>
+    <color name="colorTextSecondary">#757575</color>
 </resources>

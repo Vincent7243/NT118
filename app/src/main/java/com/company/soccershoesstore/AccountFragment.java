@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 public class AccountFragment extends Fragment {
     ImageButton imageButton;
+    ImageButton img_btn;
     private ImageButton imgTTDH;
 
     @Nullable
@@ -25,7 +26,7 @@ public class AccountFragment extends Fragment {
         imageButton = view.findViewById(R.id.img_doiten);
         imgTTDH = view.findViewById(R.id.img_TTDH);
         goToActivity();
-        goToTTDH();
+        gotoTTDH();
         return view;
     }
 
@@ -36,11 +37,10 @@ public class AccountFragment extends Fragment {
         });
     }
 
-    public void goToTTDH(){
-        imgTTDH.setOnClickListener(v -> {
-            Intent intent1 = new Intent(getActivity(), Change_info.class);
-            startActivity(intent1);
-})
-    ;}
+    public void gotoTTDH() {
+        img_btn.setOnClickListener(v -> {
+
+        });
+    }
 }
 
