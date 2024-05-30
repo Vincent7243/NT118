@@ -108,7 +108,7 @@ public class SignUpScreen extends AppCompatActivity {
                     if(email.matches(emailPattern)) {
                         String otp=sendotpmail(email);
                         Toast.makeText(getApplicationContext(), "Please check "+email, Toast.LENGTH_SHORT).show();
-                        gotoSendotp(otp,email,password);
+                        gotoSendotp(otp,email,password,name);
                     }
                     else {
                         // Nếu không đúng định dạng, hiển thị Toast thông báo
@@ -171,11 +171,12 @@ private String sendotpmail(String email) {
     }
     return otp;
 }
-private void gotoSendotp(String otp,String email,String password) {
+private void gotoSendotp(String otp,String email,String password,String name) {
         Intent intent=new Intent(SignUpScreen.this, Send_OTP_Screen.class);
         intent.putExtra("otp",otp);
         intent.putExtra("email",email);
         intent.putExtra("password",password);
+        intent.putExtra("name",name);
         startActivity(intent);
 }
 
