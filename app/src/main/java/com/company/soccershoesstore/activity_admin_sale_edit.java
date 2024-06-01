@@ -83,14 +83,22 @@ public class activity_admin_sale_edit extends AppCompatActivity {
         sale.put("price", price);
         sale.put("quantity", quantity);
 
-
-        db.collection("sales")
-                .add(sale)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        String miid=System.currentTimeMillis()+"";
+        db.collection("sales").document(miid)
+                .set(sale)
+//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    @Override
+//                    public void onSuccess(DocumentReference documentReference) {
+//                        Log.d("sale add", "DocumentSnapshot written with ID: " + documentReference.getId());
+//                        Toast.makeText(getApplicationContext(),"Add sale successful!",Toast.LENGTH_SHORT).show();
+//                        goToSale();
+//                    }
+//                })
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("sale add", "DocumentSnapshot written with ID: " + documentReference.getId());
-                        Toast.makeText(getApplicationContext(),"Add sale successful!",Toast.LENGTH_SHORT).show();
+                    public void onSuccess(Void aVoid) {
+                        Log.d("addsale", "DocumentSnapshot successfully written!");
+                        Toast.makeText(getApplicationContext(),"Add sale succesful!",Toast.LENGTH_SHORT).show();
                         goToSale();
                     }
                 })

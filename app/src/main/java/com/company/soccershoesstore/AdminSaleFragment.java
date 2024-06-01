@@ -131,7 +131,12 @@ public class AdminSaleFragment extends Fragment {
                             }
 
                             saleadapter.notifyDataSetChanged();
-
+                            saleadapter.setOnSaleDeleteListener(new Saleadapter.OnSaleDeleteListener() {
+                                @Override
+                                public void onSaleDeleted() {
+                                    onResume();
+                                }
+                            });
 
                         }else {
                             Log.w("firebasefirestore", "Error getting documents.", task.getException());

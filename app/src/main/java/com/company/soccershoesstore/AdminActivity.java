@@ -1,9 +1,13 @@
 package com.company.soccershoesstore;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +24,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
@@ -68,7 +73,27 @@ private DrawerLayout drawerLayout;
             toolbar.setTitle("Static");
             getSupportFragmentManager().beginTransaction().replace(R.id.AdminFragmentMain, new AdminStaticFragment()).commit();
         } else if (itemId == R.id.nav_logout) {
-            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(AdminActivity.this)
+                    .setTitle("Logout confirm")
+                    .setMessage("Are you sure you want to logout?")
+
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            FirebaseAuth.getInstance().signOut();
+                            Intent intent = new Intent(getApplicationContext(), LoginScreen.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(R.drawable.warning)
+                    .show();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return  true;
