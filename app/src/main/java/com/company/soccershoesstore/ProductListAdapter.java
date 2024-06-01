@@ -28,18 +28,19 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ViewHolder> {
-private Context mcontext;
+    private final Context mContext;
+    private final ArrayList<Product> mProducts;
+    private Context mcontext;
 private ArrayList<Product> mproducts;
     FirebaseFirestore db;
     FirebaseStorage storage;
 
-    public ProductListAdapter(Context context, ArrayList<Product> products, boolean isCancelledFragment) {
+    public ProductListAdapter(Context context, ArrayList<Product> products) {
         this.mContext = context;
         this.mProducts = products;
-        this.isCancelledFragment = isCancelledFragment;
     }
 
     @NonNull

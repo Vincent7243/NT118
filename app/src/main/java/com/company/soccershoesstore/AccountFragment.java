@@ -20,13 +20,13 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account,container,false);
+        imageButton = imageButton.findViewById(R.id.img_doiten);
         goToActivity();
         return view;
     }
     public void goToActivity() {
-        imageButton = imageButton.findViewById(R.id.img_doiten);
         imageButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), Change_info.class);
+            Intent intent = new Intent(getActivity(), ChangeUserInfoActivity.class);
             startActivity(intent);
         });
     }

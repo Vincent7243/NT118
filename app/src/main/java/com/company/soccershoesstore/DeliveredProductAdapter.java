@@ -1,33 +1,34 @@
 package com.company.soccershoesstore;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 
-public class WaitingProductAdapter extends RecyclerView.Adapter<WaitingProductAdapter.ViewHolder> {
+public class DeliveredProductAdapter extends RecyclerView.Adapter<DeliveredProductAdapter.ViewHolder> {
+
     private Context mContext;
     private ArrayList<Product> mProducts;
-    private OrderStatusActivity mActivity;
 
-    public WaitingProductAdapter(Context context, ArrayList<Product> products, OrderStatusActivity activity) {
+    public DeliveredProductAdapter(Context context, ArrayList<Product> products) {
         this.mContext = context;
         this.mProducts = products;
-        this.mActivity = activity;
     }
 
     @NonNull
@@ -44,35 +45,27 @@ public class WaitingProductAdapter extends RecyclerView.Adapter<WaitingProductAd
         holder.tvName.setText(product.getMname());
         holder.tvBrand.setText(product.getMbrand());
         holder.tvPrice.setText(product.getMprice() + " vnd");
-        FirebaseStorage storage = FirebaseStorage.getInstance("gs://nt118-6829d.appspot.com");
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl(product.getMimage());
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
+                String res = uri.toString();
+                Log.d("imageFirebase", "Thành công");
                 Glide.with(mContext)
-                        .load(uri.toString())
+                        .load(res)
                         .into(holder.iv);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
+                Log.d("imageFirebase", e.getMessage());
             }
         });
 
-        holder.ibDelete.setOnClickListener(v -> {
-            new AlertDialog.Builder(mContext)
-                    .setTitle("Xác nhận xóa")
-                    .setMessage("Bạn có chắc chắn muốn xóa sản phẩm này?")
-                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                        Product removedProduct = mProducts.remove(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, mProducts.size());
-                    })
-                    .setNegativeButton(android.R.string.no, null)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        });
+        holder.ibDelete.setVisibility(View.GONE);  // Hide delete button for delivered products
     }
 
     @Override
@@ -83,7 +76,7 @@ public class WaitingProductAdapter extends RecyclerView.Adapter<WaitingProductAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv;
         TextView tvName, tvBrand, tvPrice;
-        ImageButton ibDelete;
+        ImageView ibDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
