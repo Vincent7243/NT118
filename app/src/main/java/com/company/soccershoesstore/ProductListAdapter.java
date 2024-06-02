@@ -28,19 +28,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ViewHolder> {
-    private final Context mContext;
-    private final ArrayList<Product> mProducts;
     private Context mcontext;
-private ArrayList<Product> mproducts;
+    private ArrayList<Product> mproducts;
     FirebaseFirestore db;
     FirebaseStorage storage;
 
-    public ProductListAdapter(Context context, ArrayList<Product> products) {
-        this.mContext = context;
-        this.mProducts = products;
+    public ProductListAdapter(Context mcontext, ArrayList<Product> mproducts) {
+        this.mcontext = mcontext;
+        this.mproducts = mproducts;
     }
 
     @NonNull
@@ -81,9 +79,10 @@ private ArrayList<Product> mproducts;
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                String res = uri.toString();
-                Log.d("imageFirebase", "Thành công");
-                Glide.with(mContext)
+                String res= uri.toString();
+                Log.d("imgaefirebase","thành cong");
+
+                Glide.with(mcontext)
                         .load(res)
                         .into(holder.iv);
 
