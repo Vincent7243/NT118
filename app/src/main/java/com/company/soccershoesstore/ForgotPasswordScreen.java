@@ -20,7 +20,7 @@ public class ForgotPasswordScreen extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password_screen);
 
         editTextEmail = findViewById(R.id.editTextEmail);
-        buttonSend = findViewById(R.id.buttonSend);
+        buttonSend = findViewById(R.id.btn_sendmessage);
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
