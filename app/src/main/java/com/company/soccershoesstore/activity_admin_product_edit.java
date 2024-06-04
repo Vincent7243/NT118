@@ -140,7 +140,7 @@ public class activity_admin_product_edit extends AppCompatActivity {
     }
     public void addProduct(ImageView imageView,String name,String description,String price,String brand) {
         StorageReference storageRef = storage.getReference();
-        StorageReference imageRef = storageRef.child(System.currentTimeMillis()+".png");
+        StorageReference imageRef = storageRef.child("z"+System.currentTimeMillis()+".png");
         imageView.setDrawingCacheEnabled(true);
         imageView.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
