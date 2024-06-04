@@ -2,15 +2,15 @@ package com.company.soccershoesstore;
 
 public class ProductCard {
     private String id;
-    private int img;
+    private String img;
     private String price;
-    private  String title;
+    private  String name;
 
-    public ProductCard(String id, int img, String price, String title) {
+    public ProductCard(String id, String img, String price, String name) {
         this.id = id;
         this.img = img;
         this.price = price;
-        this.title = title;
+        this.name = name;
     }
 
     public String getId() {
@@ -21,11 +21,11 @@ public class ProductCard {
         this.id = id;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
@@ -37,11 +37,14 @@ public class ProductCard {
         this.price = price;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 }
+
+
+

@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
-            android:text="HOT SALE"
+            android:text="RECOMMENDED FOR YOU"
             android:textColor="@color/home"
             android:textSize="18sp"
             android:textStyle="bold" />
