@@ -18,8 +18,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Firebase;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -43,38 +45,52 @@ public class AdminChatFragment extends Fragment {
         names=new ArrayList<String>();
         adapter=new AdminChatAdapter(getContext(), R.layout.admin_item_chat_list,names);
         lv.setAdapter(adapter);
-        databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                names.clear();
+                for(DataSnapshot idname:dataSnapshot.getChildren()) {
+                    names.add(idname.getKey());
+                    adapter.notifyDataSetChanged();}
+            }
 
-                    for(DataSnapshot idname:task.getResult().getChildren()) {
-                        names.add(idname.getKey());
-                        adapter.notifyDataSetChanged();
-//                        Log.d("chadmin",idname.toString());
-//                        db.collection("users").document(idname.getKey()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                                DocumentSnapshot user=task.getResult();
-//                                if(user.exists()) {
-////                                    Log.d("chadmin",user.get("name").toString());
-//                                    names.add(user.get("name").toString());
-//                                    adapter.notifyDataSetChanged();
-//
-//                                }else {
-//                                    Toast.makeText(getContext(), "User don't exist", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//                        });
-                    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-//                    String res=task.getResult().getKey().toString();
-//                    Log.d("chadmin",res);
-                }else {
-                    Toast.makeText(getContext(),"Some error!",Toast.LENGTH_SHORT).show();
-                }
             }
         });
+//        databaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if(task.isSuccessful()) {
+//
+//                    for(DataSnapshot idname:task.getResult().getChildren()) {
+//                        names.add(idname.getKey());
+//                        adapter.notifyDataSetChanged();
+////                        Log.d("chadmin",idname.toString());
+////                        db.collection("users").document(idname.getKey()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+////                            @Override
+////                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+////                                DocumentSnapshot user=task.getResult();
+////                                if(user.exists()) {
+//////                                    Log.d("chadmin",user.get("name").toString());
+////                                    names.add(user.get("name").toString());
+////                                    adapter.notifyDataSetChanged();
+////
+////                                }else {
+////                                    Toast.makeText(getContext(), "User don't exist", Toast.LENGTH_SHORT).show();
+////                                }
+////                            }
+////                        });
+//                    }
+//
+////                    String res=task.getResult().getKey().toString();
+////                    Log.d("chadmin",res);
+//                }else {
+//                    Toast.makeText(getContext(),"Some error!",Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         return view;
     }
