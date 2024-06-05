@@ -47,7 +47,7 @@ public class Saleadapter extends ArrayAdapter<Sale> {
         ImageButton ib_delete=convertView.findViewById(R.id.ib_admin_sale_item_delete);
         quan.setText(sale.getMquantity());
         code.setText(sale.getMcode());
-        price.setText("-"+sale.getMprice()+"vnd");
+        price.setText("-"+CardProductAdapter.formatCurrency(sale.getMprice()));
         ib_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -72,7 +72,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         holder.tv_name.setText(product.getMname());
         holder.tv_brand.setText(product.getMbrand());
-        holder.tv_price.setText(product.getMprice()+"vnd");
+        holder.tv_price.setText(CardProductAdapter.formatCurrency(product.getMprice()));
         db=FirebaseFirestore.getInstance();
          storage = FirebaseStorage.getInstance("gs://nt118-6829d.appspot.com");
         StorageReference storageRef = storage.getReferenceFromUrl(product.getMimage());
