@@ -2,8 +2,6 @@ package com.company.soccershoesstore;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,29 +9,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.ktx.Firebase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-
+import java.util.Locale;
 
 public class AdminProductFragment extends Fragment {
     ImageButton ib_add;
@@ -41,42 +32,21 @@ public class AdminProductFragment extends Fragment {
     ArrayList<Product> products;
     public ProductListAdapter adapter;
     FirebaseFirestore db;
-    float dX=0,dY=0;
+    float dX=0, dY=0;
     long lastDownTime = 0;
     long clickThreshold = 200;
+    androidx.appcompat.widget.SearchView searchView;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_admin_product, container, false);
-        ib_add=view.findViewById(R.id.ib_admin_product_add);
-
-        rv=view.findViewById(R.id.rv_admin_product);
-        db=FirebaseFirestore.getInstance();
-        products=new ArrayList<>();
-
-
-        
-//        db.collection("Products")
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if(task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Log.d("firebasefirestore", document.getId() + " => " + document.getData());
-//                                Log.d("firebasefirestore",  document.getData().get("name").toString());
-//                                products.add(new Product(document.getId().toString(),document.getData().get("name").toString(),document.getData().get("price").toString(),document.getData().get("image").toString(),document.getData().get("description").toString(),document.getData().get("brand").toString()));
-//                                adapter=new ProductListAdapter(view.getContext(),products);
-//                                rv.setAdapter(adapter);
-//                                rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//                            }
-//                        }else {
-//                            Log.w("firebasefirestore", "Error getting documents.", task.getException());
-//                        }
-//                    }
-//                });
-
+        View view = inflater.inflate(R.layout.fragment_admin_product, container, false);
+        ib_add = view.findViewById(R.id.ib_admin_product_add);
+        rv = view.findViewById(R.id.rv_admin_product);
+        searchView = view.findViewById(R.id.search_view_admin_product);
+        db = FirebaseFirestore.getInstance();
+        products = new ArrayList<>();
 
         ib_add.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
@@ -110,21 +80,47 @@ public class AdminProductFragment extends Fragment {
                 return true;
             }
         });
+
         ib_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(view.getContext(),activity_admin_product_edit.class);
-                intent.putExtra("mid","");
-                intent.putExtra("mname","");
-                intent.putExtra("mimage","");
-                intent.putExtra("mdescription","");
-                intent.putExtra("mbrand","");
-                intent.putExtra("mprice","");
+                Intent intent = new Intent(view.getContext(), activity_admin_product_edit.class);
+                intent.putExtra("mid", "");
+                intent.putExtra("mname", "");
+                intent.putExtra("mimage", "");
+                intent.putExtra("mdescription", "");
+                intent.putExtra("mbrand", "");
+                intent.putExtra("mprice", "");
 
                 startActivity(intent);
             }
         });
+
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter(newText);
+                return true;
+            }
+        });
+
         return view;
+    }
+
+    private void filter(String text) {
+        ArrayList<Product> filteredList = new ArrayList<>();
+        for (Product item : products) {
+            if (item.getMname().toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT)) ||
+                    item.getMbrand().toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
+                filteredList.add(item);
+            }
+        }
+        adapter.filterList(filteredList);
     }
 
     @Override
@@ -136,15 +132,19 @@ public class AdminProductFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()) {
-                        products.clear();
+                        if (task.isSuccessful()) {
+                            products.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("firebasefirestore", document.getId() + " => " + document.getData());
-                                Log.d("firebasefirestore",  document.getData().get("name").toString());
-                                products.add(new Product(document.getId().toString(),document.getData().get("name").toString(),document.getData().get("price").toString(),document.getData().get("image").toString(),document.getData().get("description").toString(),document.getData().get("brand").toString()));
-
+                                products.add(new Product(
+                                        document.getId(),
+                                        document.getString("name"),
+                                        document.getString("price"),
+                                        document.getString("image"),
+                                        document.getString("description"),
+                                        document.getString("brand")
+                                ));
                             }
-                            adapter=new ProductListAdapter(getContext(),products);
+                            adapter = new ProductListAdapter(getContext(), products);
                             rv.setAdapter(adapter);
                             rv.setLayoutManager(new LinearLayoutManager(getContext()));
                             adapter.setOnProductDeleteListener(new ProductListAdapter.OnProductDeleteListener() {
@@ -153,15 +153,10 @@ public class AdminProductFragment extends Fragment {
                                     onResume();
                                 }
                             });
-
-                        }else {
-                            Log.w("firebasefirestore", "Error getting documents.", task.getException());
-
-
+                        } else {
+                            Toast.makeText(getContext(), "Error getting documents.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
-
-
 }

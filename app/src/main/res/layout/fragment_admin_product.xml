@@ -4,19 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".AdminProductFragment">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view_admin_product"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/background_input" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_admin_product"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp" >
+        android:layout_marginTop="66dp" />
 
-    </androidx.recyclerview.widget.RecyclerView>
-
-
-
-            <ImageButton
+    <ImageButton
         android:id="@+id/ib_admin_product_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

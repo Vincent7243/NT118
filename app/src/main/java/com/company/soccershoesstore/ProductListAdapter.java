@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,27 +43,24 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater=LayoutInflater.from(mcontext);
-        View productview=inflater.inflate(R.layout.item_list_product_admin,parent,false);
-
-        ViewHolder viewHolder=new ViewHolder(productview);
-        return viewHolder;
-
+        LayoutInflater inflater = LayoutInflater.from(mcontext);
+        View productview = inflater.inflate(R.layout.item_list_product_admin, parent, false);
+        return new ViewHolder(productview);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Product product=mproducts.get(position);
+        Product product = mproducts.get(position);
         holder.ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(mcontext.getApplicationContext(),activity_admin_product_edit.class);
-                intent.putExtra("mid",product.getMid());
-                intent.putExtra("mname",product.getMname());
-                intent.putExtra("mimage",product.getMimage());
-                intent.putExtra("mdescription",product.getMdescription());
-                intent.putExtra("mbrand",product.getMbrand());
-                intent.putExtra("mprice",product.getMprice());
+                Intent intent = new Intent(mcontext.getApplicationContext(), activity_admin_product_edit.class);
+                intent.putExtra("mid", product.getMid());
+                intent.putExtra("mname", product.getMname());
+                intent.putExtra("mimage", product.getMimage());
+                intent.putExtra("mdescription", product.getMdescription());
+                intent.putExtra("mbrand", product.getMbrand());
+                intent.putExtra("mprice", product.getMprice());
 
                 mcontext.startActivity(intent);
             }
@@ -73,58 +69,51 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.tv_name.setText(product.getMname());
         holder.tv_brand.setText(product.getMbrand());
         holder.tv_price.setText(CardProductAdapter.formatCurrency(product.getMprice()));
-        db=FirebaseFirestore.getInstance();
-         storage = FirebaseStorage.getInstance("gs://nt118-6829d.appspot.com");
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance("gs://nt118-6829d.appspot.com");
         StorageReference storageRef = storage.getReferenceFromUrl(product.getMimage());
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                String res= uri.toString();
-                Log.d("imgaefirebase","thành cong");
-
+                String res = uri.toString();
                 Glide.with(mcontext)
                         .load(res)
                         .into(holder.iv);
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-               Toast.makeText(mcontext,e.toString(),Toast.LENGTH_SHORT).show();
-                Log.d("imgaefirebase",e.getMessage());
+                Toast.makeText(mcontext, e.toString(), Toast.LENGTH_SHORT).show();
+                Log.d("imgaefirebase", e.getMessage());
             }
         });
+
         holder.ib_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(mcontext.getApplicationContext(),activity_admin_product_edit.class);
-                intent.putExtra("mid",product.getMid());
-                intent.putExtra("mname",product.getMname());
-                intent.putExtra("mimage",product.getMimage());
-                intent.putExtra("mdescription",product.getMdescription());
-                intent.putExtra("mbrand",product.getMbrand());
-                intent.putExtra("mprice",product.getMprice());
+                Intent intent = new Intent(mcontext.getApplicationContext(), activity_admin_product_edit.class);
+                intent.putExtra("mid", product.getMid());
+                intent.putExtra("mname", product.getMname());
+                intent.putExtra("mimage", product.getMimage());
+                intent.putExtra("mdescription", product.getMdescription());
+                intent.putExtra("mbrand", product.getMbrand());
+                intent.putExtra("mprice", product.getMprice());
 
                 mcontext.startActivity(intent);
             }
         });
+
         holder.ib_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(mcontext)
                         .setTitle("Delete confirm")
                         .setMessage("Are you sure you want to delete this product?")
-
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                deleteImage(product.getMimage(),product.getMid());
-
+                                deleteImage(product.getMimage(), product.getMid());
                             }
                         })
-
-                        // A null listener allows the button to dismiss the dialog and take no further action.
                         .setNegativeButton(android.R.string.no, null)
                         .setIcon(R.drawable.warning)
                         .show();
@@ -134,63 +123,62 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @Override
     public int getItemCount() {
-        return mproducts.size()     ;
+        return mproducts.size();
     }
-public class ViewHolder extends RecyclerView.ViewHolder{
-ImageView iv;
-TextView tv_name,tv_brand,tv_price;
-ImageButton ib_delete,ib_edit;
-LinearLayout ll;
 
-    public ViewHolder(@NonNull View itemView) {
-        super(itemView);
-        iv=itemView.findViewById(R.id.iv_admin_product_item_image);
-        tv_name=itemView.findViewById(R.id.tv_admin_product_item_name);
-        tv_brand=itemView.findViewById(R.id.tv_admin_product_item_brand);
-        tv_price=itemView.findViewById(R.id.tv_admin_product_item_price);
-        ib_delete=itemView.findViewById(R.id.ib_admin_product_item_delete);
-        ib_edit=itemView.findViewById(R.id.ib_admin_product_item_edit);
-        ll=itemView.findViewById(R.id.ii_admin_product_rowproduct);
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView iv;
+        TextView tv_name, tv_brand, tv_price;
+        ImageButton ib_delete, ib_edit;
+        LinearLayout ll;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            iv = itemView.findViewById(R.id.iv_admin_product_item_image);
+            tv_name = itemView.findViewById(R.id.tv_admin_product_item_name);
+            tv_brand = itemView.findViewById(R.id.tv_admin_product_item_brand);
+            tv_price = itemView.findViewById(R.id.tv_admin_product_item_price);
+            ib_delete = itemView.findViewById(R.id.ib_admin_product_item_delete);
+            ib_edit = itemView.findViewById(R.id.ib_admin_product_item_edit);
+            ll = itemView.findViewById(R.id.ii_admin_product_rowproduct);
+        }
     }
-}
-    public void deletProduct(String iid) {
+
+    public void deleteProduct(String iid) {
         db.collection("Products").document(iid)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("deleteProduct", "DocumentSnapshot successfully deleted!");
                         if (mListener != null) {
                             mListener.onProductDeleted();
-                            Toast.makeText(mcontext,"Delete successful!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mcontext, "Delete successful!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("deleteProduct", "Error deleting document", e);
-                        Toast.makeText(mcontext,"Delete failed!!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mcontext, "Delete failed!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-    public void deleteImage(String img,String iid) {
+
+    public void deleteImage(String img, String iid) {
         StorageReference storageRef = storage.getReferenceFromUrl(img);
         storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d("deleteimage","delete image sucessfull");
-                deletProduct(iid);
+                deleteProduct(iid);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Uh-oh, an error occurred!
-                Log.d("deleteimage","delete image failed+ "+exception);
-
+                Toast.makeText(mcontext, "Image deletion failed!", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     public interface OnProductDeleteListener {
         void onProductDeleted();
     }
@@ -199,5 +187,10 @@ LinearLayout ll;
 
     public void setOnProductDeleteListener(OnProductDeleteListener listener) {
         this.mListener = listener;
+    }
+
+    public void filterList(ArrayList<Product> filteredList) {
+        mproducts = filteredList;
+        notifyDataSetChanged();
     }
 }

@@ -197,7 +197,7 @@ public class activity_admin_product_edit extends AppCompatActivity {
         deleteImage(img_old);
         StorageReference storageRef = storage.getReference();
 
-        StorageReference imageRef = storageRef.child(System.currentTimeMillis()+".png");
+        StorageReference imageRef = storageRef.child("z"+System.currentTimeMillis()+".png");
         imageView.setDrawingCacheEnabled(true);
         imageView.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
