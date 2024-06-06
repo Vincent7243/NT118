@@ -26,6 +26,7 @@ public class AdminBillViewPagerAdapter extends FragmentStateAdapter {
         }
     }
 
+
     @Override
     public int getItemCount() {
         return 3;
