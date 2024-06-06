@@ -3,11 +3,13 @@ package com.company.soccershoesstore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -192,11 +194,38 @@ public class BottomNavigationBar_and_TopNav extends AppCompatActivity {
         assert searchView != null;
         searchView.setQueryHint("Search Data here...");
 
+        // Set up search listener
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Handle search query submit
+                performSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Handle search query text change
+                performSearch(newText);
+                return false;
+            }
+        });
+
         // Ẩn nút tìm kiếm nếu không phải ở Home fragment
         toggleSearchMenuItem(mViewPager.getCurrentItem() == 2);
 
         return true;
     }
+    private void performSearch(String query) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.all_fragment_category); // Chú ý ID của fragment container
+
+        if (currentFragment instanceof AllCategoryFragment) {
+            ((AllCategoryFragment) currentFragment).searchProducts(query);
+        } else {
+            Log.d("SEARCH", "Current fragment is not AllCategoryFragment");
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

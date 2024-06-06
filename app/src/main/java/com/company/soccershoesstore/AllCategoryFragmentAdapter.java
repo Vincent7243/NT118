@@ -1,5 +1,6 @@
 package com.company.soccershoesstore;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -25,6 +28,7 @@ import java.util.List;
 public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategoryFragmentAdapter.ViewHolder> {
 
     private List<AllCategoryFragmentProduct> productList;
+    private boolean isFilled = false;
 
     public AllCategoryFragmentAdapter(List<AllCategoryFragmentProduct> productList) {
         this.productList = productList;
@@ -111,6 +115,25 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
                 notifyDataSetChanged();
             }
         });
+        holder.favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Thực hiện chuyển đổi giữa hình ảnh background cho nút favorite
+                Drawable filledHeart = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_love_fill);
+                Drawable outlineHeart = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_love);
+
+                if (!isFilled) {
+                    holder.favoriteButton.setBackground(filledHeart);
+                    isFilled = true;
+                } else {
+                    holder.favoriteButton.setBackground(outlineHeart);
+                    isFilled = false;
+                }
+            }
+        });
+
+
+
     }
 
 
@@ -128,6 +151,7 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
         public ImageView productImage;
         public Button increasePriceButton; // Thêm thuộc tính increasePriceButton
         public Button decreasePriceButton; // Thêm thuộc tính decreasePriceButton
+        public Button favoriteButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -138,6 +162,7 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
             productImage = itemView.findViewById(R.id.product_image);
             increasePriceButton = itemView.findViewById(R.id.increase_price_button); // Ánh xạ nút tăng giá tiền
             decreasePriceButton = itemView.findViewById(R.id.decrease_price_button); // Ánh xạ nút giảm giá tiền
+            favoriteButton = itemView.findViewById(R.id.favorite_button);
         }
     }
 }

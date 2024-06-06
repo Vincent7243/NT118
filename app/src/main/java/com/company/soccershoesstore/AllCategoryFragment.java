@@ -58,6 +58,7 @@ public class AllCategoryFragment extends Fragment {
     }
 
     private void fetchProductsByBrand(String brand) {
+        Log.d("FETCH_PRODUCTS", "Fetching products for brand: " + brand);
         db.collection("Products")
                 .whereEqualTo("brand", brand)
                 .get()
@@ -65,6 +66,7 @@ public class AllCategoryFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            Log.d("FETCH_PRODUCTS", "Query successful: " + task.getResult().size() + " results");
                             productList.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 AllCategoryFragmentProduct product = document.toObject(AllCategoryFragmentProduct.class);
@@ -72,9 +74,35 @@ public class AllCategoryFragment extends Fragment {
                             }
                             adapter.notifyDataSetChanged();
                         } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
+                            Log.d("FETCH_PRODUCTS", "Error getting documents: ", task.getException());
                         }
                     }
                 });
     }
+
+    public void searchProducts(String query) {
+        Log.d("SEARCH", "Searching for: " + query);
+        db.collection("Products")
+                .whereEqualTo("brand", getArguments().getString("brand"))
+                .whereEqualTo("name", query)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("SEARCH", "Query successful: " + task.getResult().size() + " results");
+                            productList.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                AllCategoryFragmentProduct product = document.toObject(AllCategoryFragmentProduct.class);
+                                productList.add(product);
+                            }
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Log.d("SEARCH", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+
 }
