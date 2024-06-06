@@ -1,6 +1,7 @@
 package com.company.soccershoesstore;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,10 @@ public class AdapterAdminBill extends ArrayAdapter<BillInfo> {
         btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mcontext,billInfo.getIdBill(), Toast.LENGTH_LONG).show();
+                Intent intent =new Intent(mcontext.getApplicationContext(), Admin_detail_bill.class);
+                intent.putExtra("idbill",billInfo.getIdBill());
+                intent.putExtra("total",billInfo.getTotal());
+                mcontext.startActivity(intent);
             }
         });
         btnApprove.setOnClickListener(new View.OnClickListener() {
@@ -60,8 +64,8 @@ public class AdapterAdminBill extends ArrayAdapter<BillInfo> {
 
             }
         });
-        tvid.setText(billInfo.getIdUser());
-        tvtotal.setText(billInfo.getTotal());
+        tvid.setText(billInfo.getIdBill());
+        tvtotal.setText(CardProductAdapter.formatCurrency(billInfo.getTotal()));
         getUserInfo(billInfo.getIdUser(),tvaddress,tvname,tvemail,tvphone);
 
         return convertView;

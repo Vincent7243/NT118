@@ -34,6 +34,7 @@ public class AdminChatAdapter extends ArrayAdapter<String> {
         super(context, resource, objects);
         databaseReference= FirebaseDatabase.getInstance().getReference().child("messages");
         db=FirebaseFirestore.getInstance();
+        
     }
 
 

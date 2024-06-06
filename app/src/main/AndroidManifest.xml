@@ -16,6 +16,9 @@
         android:theme="@style/Theme.SoccerShoesStore"
         tools:targetApi="31">
         <activity
+            android:name=".Admin_detail_bill"
+            android:exported="false" />
+        <activity
             android:name=".activity_admin_sale_edit"
             android:exported="false"
             android:windowSoftInputMode="adjustUnspecified" />
@@ -54,8 +57,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChangeUserInfoActivity"></activity>
-        <activity android:name=".OrderStatusActivity"></activity>
+        <activity android:name=".ChangeUserInfoActivity" />
+        <activity android:name=".OrderStatusActivity" />
     </application>
 
 </manifest>
