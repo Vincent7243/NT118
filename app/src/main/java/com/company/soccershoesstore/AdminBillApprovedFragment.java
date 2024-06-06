@@ -38,7 +38,15 @@ public class AdminBillApprovedFragment extends Fragment {
         db=FirebaseFirestore.getInstance();
         billInfos=new ArrayList<>();
         sv=view.findViewById(R.id.sv_admin_bill_approved);
-        adapter =new AdapterAdminBill(view.getContext(),R.layout.item_admin_bill_new,billInfos);
+        adapter = new AdapterAdminBill(view.getContext(), R.layout.item_admin_bill_new, billInfos, new AdapterAdminBill.OnApproveButtonClickListener() {
+            @Override
+            public void onApproveButtonClick() {
+                // Khởi tạo lại AdminBillFragment
+                if (getActivity() instanceof AdminActivity) {
+                    ((AdminActivity) getActivity()).reloadAdminBillFragment();
+                }
+            }
+        });
 
         db.collection("bills")
                 .whereEqualTo("status","1")
@@ -47,7 +55,7 @@ public class AdminBillApprovedFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         for(DocumentSnapshot queryDocumentSnapshots:task.getResult()) {
-                            billInfos.add(new BillInfo(queryDocumentSnapshots.getId(),queryDocumentSnapshots.get("id_user").toString(),"0",queryDocumentSnapshots.get("total").toString()));
+                            billInfos.add(new BillInfo(queryDocumentSnapshots.getId(),queryDocumentSnapshots.get("id_user").toString(),"1",queryDocumentSnapshots.get("total").toString()));
                             adapter.notifyDataSetChanged();
                         }
                     }

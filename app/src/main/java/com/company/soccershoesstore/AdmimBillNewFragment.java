@@ -27,31 +27,38 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class AdmimBillNewFragment extends Fragment {
-   ListView lv;
-   ArrayList <BillInfo> billInfos;
-   AdapterAdminBill adapter;
-   FirebaseFirestore db;
-   SearchView sv;
-
+    ListView lv;
+    ArrayList<BillInfo> billInfos;
+    AdapterAdminBill adapter;
+    FirebaseFirestore db;
+    SearchView sv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_admim_bill_new, container, false);
-        lv=view.findViewById(R.id.lv_admin_bill_new);
-        db=FirebaseFirestore.getInstance();
-        billInfos=new ArrayList<>();
-        sv=view.findViewById(R.id.sv_admin_bill_new);
-        adapter =new AdapterAdminBill(view.getContext(),R.layout.item_admin_bill_new,billInfos);
+        View view = inflater.inflate(R.layout.fragment_admim_bill_new, container, false);
+        lv = view.findViewById(R.id.lv_admin_bill_new);
+        db = FirebaseFirestore.getInstance();
+        billInfos = new ArrayList<>();
+        sv = view.findViewById(R.id.sv_admin_bill_new);
+        adapter = new AdapterAdminBill(view.getContext(), R.layout.item_admin_bill_new, billInfos, new AdapterAdminBill.OnApproveButtonClickListener() {
+            @Override
+            public void onApproveButtonClick() {
+                // Khởi tạo lại AdminBillFragment
+                if (getActivity() instanceof AdminActivity) {
+                    ((AdminActivity) getActivity()).reloadAdminBillFragment();
+                }
+            }
+        });
 
         db.collection("bills")
-                .whereEqualTo("status","0")
+                .whereEqualTo("status", "0")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for(DocumentSnapshot queryDocumentSnapshots:task.getResult()) {
-                            billInfos.add(new BillInfo(queryDocumentSnapshots.getId(),queryDocumentSnapshots.get("id_user").toString(),"0",queryDocumentSnapshots.get("total").toString()));
+                        for (DocumentSnapshot queryDocumentSnapshots : task.getResult()) {
+                            billInfos.add(new BillInfo(queryDocumentSnapshots.getId(), queryDocumentSnapshots.get("id_user").toString(), "0", queryDocumentSnapshots.get("total").toString()));
                             adapter.notifyDataSetChanged();
                         }
                     }
@@ -67,7 +74,7 @@ public class AdmimBillNewFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 ArrayList<BillInfo> filteredList = new ArrayList<>();
                 for (BillInfo item : billInfos) {
-                    if (item.getIdBill().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT)) ) {
+                    if (item.getIdBill().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))) {
                         filteredList.add(item);
                     }
                 }
