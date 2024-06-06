@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,12 +24,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AdmimBillNewFragment extends Fragment {
    ListView lv;
    ArrayList <BillInfo> billInfos;
    AdapterAdminBill adapter;
    FirebaseFirestore db;
+   SearchView sv;
 
 
     @Override
@@ -38,6 +41,7 @@ public class AdmimBillNewFragment extends Fragment {
         lv=view.findViewById(R.id.lv_admin_bill_new);
         db=FirebaseFirestore.getInstance();
         billInfos=new ArrayList<>();
+        sv=view.findViewById(R.id.sv_admin_bill_new);
         adapter =new AdapterAdminBill(view.getContext(),R.layout.item_admin_bill_new,billInfos);
 
         db.collection("bills")
@@ -53,6 +57,24 @@ public class AdmimBillNewFragment extends Fragment {
                     }
                 });
         lv.setAdapter(adapter);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<BillInfo> filteredList = new ArrayList<>();
+                for (BillInfo item : billInfos) {
+                    if (item.getIdBill().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT)) ) {
+                        filteredList.add(item);
+                    }
+                }
+                adapter.filterList(filteredList);
+                return true;
+            }
+        });
 
         return view;
     }

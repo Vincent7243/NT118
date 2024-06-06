@@ -24,10 +24,17 @@ import java.util.List;
 
 public class AdapterAdminBill extends ArrayAdapter<BillInfo> {
     Context mcontext;
+    ArrayList<BillInfo> billInfos;
 
     public AdapterAdminBill(@NonNull Context context, int resource, @NonNull List<BillInfo> objects) {
         super(context, resource, objects);
         this.mcontext = context;
+        this.billInfos= (ArrayList<BillInfo>) objects;
+    }
+
+    @Override
+    public int getCount() {
+        return billInfos.size();
     }
 
     @NonNull
@@ -39,7 +46,7 @@ public class AdapterAdminBill extends ArrayAdapter<BillInfo> {
                             false);
         }
 
-        BillInfo billInfo=getItem(position);
+        BillInfo billInfo=billInfos.get(position);
         TextView tvid=convertView.findViewById(R.id.tv_admin_bill_new_idbill);
         TextView tvaddress=convertView.findViewById(R.id.tv_admin_bill_new_address);
         TextView tvtotal=convertView.findViewById(R.id.tv_admin_bill_new_total);
@@ -88,5 +95,9 @@ public class AdapterAdminBill extends ArrayAdapter<BillInfo> {
                         phone.setText(documentSnapshot.get("phonenum").toString());
                     }
                 });
+    }
+    public void filterList(ArrayList<BillInfo> bills) {
+        billInfos=bills;
+        notifyDataSetChanged();
     }
 }

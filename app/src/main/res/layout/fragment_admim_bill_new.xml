@@ -6,11 +6,12 @@
     android:orientation="vertical"
     tools:context=".AdmimBillNewFragment" >
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="new fragmen" />
+    <SearchView
+        android:id="@+id/sv_admin_bill_new"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/background_input" />
 
     <ListView
         android:id="@+id/lv_admin_bill_new"
