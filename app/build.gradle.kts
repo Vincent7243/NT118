@@ -63,4 +63,8 @@ dependencies {
     implementation("me.relex:circleindicator:2.1.6")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.android.material:material:1.3.0-alpha03")
+    implementation ("com.squareup.picasso:picasso:2.8")
+
+
+
 }

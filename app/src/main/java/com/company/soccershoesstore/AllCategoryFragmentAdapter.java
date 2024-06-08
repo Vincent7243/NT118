@@ -1,7 +1,9 @@
 package com.company.soccershoesstore;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import androidx.fragment.app.FragmentTransaction;
 
 
 import java.util.Collections;
@@ -129,11 +136,27 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
                     holder.favoriteButton.setBackground(outlineHeart);
                     isFilled = false;
                 }
+                // Thêm sản phẩm vào danh sách yêu thích
+                FavoritesFragmentManager.addProductToFavorites(product);
+
+                // Chuyển đổi sang FavoritesFragment
+                Fragment favoritesFragment = new FavoritesFragment();
+                FragmentActivity activity = null;
+                if (v.getContext() instanceof FragmentActivity) {
+                    activity = (FragmentActivity) v.getContext();
+                }
+
+                if (activity != null) {
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.fragment_fav_container, favoritesFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
             }
         });
 
-
-
+        //fragment_fav_container
     }
 
 
