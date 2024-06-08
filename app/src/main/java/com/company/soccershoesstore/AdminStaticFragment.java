@@ -67,12 +67,12 @@ public class AdminStaticFragment extends Fragment {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for(DocumentSnapshot documentSnapshot:queryDocumentSnapshots) {
                             Log.d("getProductfb",documentSnapshot.getId());
-                            sumproduct(documentSnapshot.getId());
+                            sumproduct(documentSnapshot.getId(),documentSnapshot.get("name").toString());
                         }
                     }
                 });
     }
-    public void sumproduct(String mid) {
+    public void sumproduct(String mid,String name) {
         FirebaseFirestore.getInstance().collection("bill_items")
                 .whereEqualTo("id_product", mid)
                 .get()
@@ -83,7 +83,7 @@ public class AdminStaticFragment extends Fragment {
                         for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                             tt += Long.parseLong(documentSnapshot.get("quan").toString());
                         }
-                        products.add(new ItemProductStaticAdmin(mid,tt));
+                        products.add(new ItemProductStaticAdmin(mid,tt,name));
                         sortDescendingByNum(products);
                         adapterProductStaticAdmin.notifyDataSetChanged();
 //                        products.forEach(itemProductStaticAdmin -> Log.d("itemProduct",itemProductStaticAdmin.getNum()+""));

@@ -4,6 +4,14 @@ public class ItemProductStaticAdmin {
     String mid;
     long num;
 
+    String name;
+
+    public ItemProductStaticAdmin(String mid, long num, String name) {
+        this.mid = mid;
+        this.num = num;
+        this.name = name;
+    }
+
     public String getMid() {
         return mid;
     }
@@ -20,8 +28,11 @@ public class ItemProductStaticAdmin {
         this.num = num;
     }
 
-    public ItemProductStaticAdmin(String mid, long num) {
-        this.mid = mid;
-        this.num = num;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

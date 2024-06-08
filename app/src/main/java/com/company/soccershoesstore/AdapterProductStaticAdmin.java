@@ -29,8 +29,10 @@ public class AdapterProductStaticAdmin extends ArrayAdapter<ItemProductStaticAdm
         ItemProductStaticAdmin itemProductStaticAdmin=getItem(position);
         TextView tv_id=convertView.findViewById(R.id.tv_item_admin_static_product);
         TextView tv_num=convertView.findViewById(R.id.tv_item_admin_static_product_num);
-        tv_id.setText(itemProductStaticAdmin.getMid());
-        tv_num.setText(itemProductStaticAdmin.num+"");
+        TextView tv_name=convertView.findViewById(R.id.tv_item_admin_static_product_name);
+        tv_id.setText("ID: "+itemProductStaticAdmin.getMid());
+        tv_num.setText("Sold: "+itemProductStaticAdmin.num+"");
+        tv_name.setText("Name: "+itemProductStaticAdmin.getName());
         return convertView;
     }
 }
