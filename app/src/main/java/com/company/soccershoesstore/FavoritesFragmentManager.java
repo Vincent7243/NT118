@@ -27,6 +27,10 @@ import java.util.List;
 public class FavoritesFragmentManager {
     private static List<AllCategoryFragmentProduct> favoriteProducts = new ArrayList<>();
 
+    public static boolean isProductInFavorites(AllCategoryFragmentProduct product) {
+        return favoriteProducts.contains(product);
+    }
+
     public static void addProductToFavorites(AllCategoryFragmentProduct product) {
         if (!favoriteProducts.contains(product)) {
             favoriteProducts.add(product);
@@ -34,8 +38,14 @@ public class FavoritesFragmentManager {
         }
     }
 
+    public static void removeProductFromFavorites(AllCategoryFragmentProduct product) {
+        favoriteProducts.remove(product);
+        Log.d("FavoritesManager", "Product removed from favorites: " + product.getName());
+    }
+
     public static List<AllCategoryFragmentProduct> getFavoriteProducts() {
         return new ArrayList<>(favoriteProducts);
     }
 }
+
 

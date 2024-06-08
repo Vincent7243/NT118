@@ -1,6 +1,6 @@
 package com.company.soccershoesstore;
 
-public class AllCategoryFragmentProduct {
+public class AllCategoryFragmentProduct  {
     private String brand;
     private String description;
     private String image;

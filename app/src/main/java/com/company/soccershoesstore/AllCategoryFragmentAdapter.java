@@ -1,9 +1,7 @@
 package com.company.soccershoesstore;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +18,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import androidx.fragment.app.FragmentTransaction;
-
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,11 +29,11 @@ import java.util.List;
 
 public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategoryFragmentAdapter.ViewHolder> {
 
-    private List<AllCategoryFragmentProduct> productList;
+    private List<AllCategoryFragmentProduct> products;
     private boolean isFilled = false;
 
-    public AllCategoryFragmentAdapter(List<AllCategoryFragmentProduct> productList) {
-        this.productList = productList;
+    public AllCategoryFragmentAdapter(List<AllCategoryFragmentProduct> products) {
+        this.products = products;
     }
 
     @NonNull
@@ -50,7 +45,7 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        AllCategoryFragmentProduct product = productList.get(position);
+        AllCategoryFragmentProduct product = products.get(position);
         holder.productName.setText(product.getName());
         holder.productBrand.setText(product.getBrand());
         holder.productDescription.setText(product.getDescription());
@@ -72,6 +67,7 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
                 // Xử lý khi có lỗi xảy ra khi lấy URL của hình ảnh
             }
         });
+
         if (position == 0) {
             holder.increasePriceButton.setVisibility(View.VISIBLE);
             holder.decreasePriceButton.setVisibility(View.VISIBLE);
@@ -84,11 +80,11 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
             @Override
             public void onClick(View v) {
                 // Tăng giá tiền của sản phẩm
-                double currentPrice = Double.parseDouble(productList.get(position).getPrice());
+                double currentPrice = Double.parseDouble(products.get(position).getPrice());
                 double newPrice = currentPrice + 1; // Ví dụ tăng giá tiền lên 1 đơn vị
-                productList.get(position).setPrice(String.valueOf(newPrice));
+                products.get(position).setPrice(String.valueOf(newPrice));
                 // Sắp xếp lại danh sách sản phẩm theo giá tiền tăng dần
-                Collections.sort(productList, new Comparator<AllCategoryFragmentProduct>() {
+                Collections.sort(products, new Comparator<AllCategoryFragmentProduct>() {
                     @Override
                     public int compare(AllCategoryFragmentProduct o1, AllCategoryFragmentProduct o2) {
                         double price1 = Double.parseDouble(o1.getPrice());
@@ -104,14 +100,14 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
             @Override
             public void onClick(View v) {
                 // Giảm giá tiền của sản phẩm
-                double currentPrice = Double.parseDouble(productList.get(position).getPrice());
+                double currentPrice = Double.parseDouble(products.get(position).getPrice());
                 double newPrice = currentPrice - 1; // Ví dụ giảm giá tiền đi 1 đơn vị
                 if (newPrice < 0) {
                     newPrice = 0; // Đảm bảo giá tiền không âm
                 }
-                productList.get(position).setPrice(String.valueOf(newPrice));
+                products.get(position).setPrice(String.valueOf(newPrice));
                 // Sắp xếp lại danh sách sản phẩm theo giá tiền giảm dần
-                Collections.sort(productList, new Comparator<AllCategoryFragmentProduct>() {
+                Collections.sort(products, new Comparator<AllCategoryFragmentProduct>() {
                     @Override
                     public int compare(AllCategoryFragmentProduct o1, AllCategoryFragmentProduct o2) {
                         double price1 = Double.parseDouble(o1.getPrice());
@@ -122,22 +118,27 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
                 notifyDataSetChanged();
             }
         });
+
         holder.favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // Thực hiện chuyển đổi giữa hình ảnh background cho nút favorite
                 Drawable filledHeart = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_love_fill);
                 Drawable outlineHeart = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_love);
 
-                if (!isFilled) {
-                    holder.favoriteButton.setBackground(filledHeart);
-                    isFilled = true;
-                } else {
+                // Kiểm tra xem sản phẩm đã có trong danh sách yêu thích chưa
+                boolean isFavorite = FavoritesFragmentManager.isProductInFavorites(product);
+
+                if (isFavorite) {
+                    // Nếu sản phẩm đã có trong danh sách yêu thích, xóa nó khỏi danh sách
+                    FavoritesFragmentManager.removeProductFromFavorites(product);
                     holder.favoriteButton.setBackground(outlineHeart);
-                    isFilled = false;
+                } else {
+                    // Nếu sản phẩm chưa có trong danh sách yêu thích, thêm nó vào danh sách
+                    FavoritesFragmentManager.addProductToFavorites(product);
+                    holder.favoriteButton.setBackground(filledHeart);
                 }
-                // Thêm sản phẩm vào danh sách yêu thích
-                FavoritesFragmentManager.addProductToFavorites(product);
 
                 // Chuyển đổi sang FavoritesFragment
                 Fragment favoritesFragment = new FavoritesFragment();
@@ -155,14 +156,11 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
                 }
             }
         });
-
-        //fragment_fav_container
     }
-
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return products.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -172,8 +170,8 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
         public TextView productDescription;
         public TextView productPrice;
         public ImageView productImage;
-        public Button increasePriceButton; // Thêm thuộc tính increasePriceButton
-        public Button decreasePriceButton; // Thêm thuộc tính decreasePriceButton
+        public Button increasePriceButton;
+        public Button decreasePriceButton;
         public Button favoriteButton;
 
         public ViewHolder(@NonNull View itemView) {
@@ -183,8 +181,8 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
             productDescription = itemView.findViewById(R.id.product_description);
             productPrice = itemView.findViewById(R.id.product_price);
             productImage = itemView.findViewById(R.id.product_image);
-            increasePriceButton = itemView.findViewById(R.id.increase_price_button); // Ánh xạ nút tăng giá tiền
-            decreasePriceButton = itemView.findViewById(R.id.decrease_price_button); // Ánh xạ nút giảm giá tiền
+            increasePriceButton = itemView.findViewById(R.id.increase_price_button);
+            decreasePriceButton = itemView.findViewById(R.id.decrease_price_button);
             favoriteButton = itemView.findViewById(R.id.favorite_button);
         }
     }

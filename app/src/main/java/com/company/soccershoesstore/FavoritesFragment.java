@@ -47,5 +47,4 @@ public class FavoritesFragment extends Fragment {
             Log.d("FavoritesFragment", "Favorites list updated, size: " + favoriteProducts.size());
         }
     }
-
 }
