@@ -2,13 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_item_admin_static_id_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,13 +24,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_item_admin_static_total_user"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textColor="@color/home"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_item_admin_static_phone_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:text="TextView"
+        android:textColor="#C53838" />
+
 </LinearLayout>
