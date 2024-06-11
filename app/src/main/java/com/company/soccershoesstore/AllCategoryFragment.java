@@ -39,10 +39,12 @@ public class AllCategoryFragment extends Fragment implements FavoritesFragmentMa
         backButton = view.findViewById(R.id.back_button);
 
         productList = new ArrayList<>();
-        adapter = new AllCategoryFragmentAdapter(productList);
+        adapter = new AllCategoryFragmentAdapter(productList, getContext());  // Pass context
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        // Initialize FavoritesFragmentManager
+        FavoritesFragmentManager.initialize(getContext());
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -159,6 +159,7 @@ public class activity_admin_product_edit extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 String imagename="gs://nt118-6829d.appspot.com/"+imageRef.getName();
+                addNotification(brand);
                 addDocument(name,description,imagename,price,brand);
             }
         });
@@ -270,4 +271,15 @@ public void changeDocument(String iid,String name,String description,String imag
                 }
             });
 }
+public void addNotification(String brand) {
+    Map<String, Object> product = new HashMap<>();
+    product.put("content", "The shop has just updated new shoes from "+brand+". You can check them out.");
+    product.put("type", "new");
+
+
+    db.collection("notification").document("z"+System.currentTimeMillis())
+            .set(product);
+
+}
+
 }

@@ -1,7 +1,6 @@
 package com.company.soccershoesstore;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class FavoritesFragment extends Fragment {
+public class FavoritesFragment extends Fragment implements FavoritesFragmentManager.OnFavoritesChangedListener {
 
     private RecyclerView recyclerView;
     private AllCategoryFragmentAdapter adapter;
@@ -27,24 +26,43 @@ public class FavoritesFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view_favorites);
 
+        FavoritesFragmentManager.initialize(getContext());
+
+
         // Lấy danh sách các sản phẩm yêu thích từ FavoritesFragmentManager
         favoriteProducts = FavoritesFragmentManager.getFavoriteProducts();
-        adapter = new AllCategoryFragmentAdapter(favoriteProducts);
+        adapter = new AllCategoryFragmentAdapter(favoriteProducts, getContext());
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
         return view;
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (adapter != null) {
-            favoriteProducts.clear();
-            favoriteProducts.addAll(FavoritesFragmentManager.getFavoriteProducts());
-            adapter.notifyDataSetChanged();
-            Log.d("FavoritesFragment", "Favorites list updated, size: " + favoriteProducts.size());
-        }
+        FavoritesFragmentManager.addOnFavoritesChangedListener(this);
+        // Cập nhật adapter ngay khi Fragment xuất hiện trở lại
+        favoriteProducts.clear();
+        favoriteProducts.addAll(FavoritesFragmentManager.getFavoriteProducts());
+        adapter.notifyDataSetChanged();
+
+//        FavoritesFragmentManager.addOnFavoritesChangedListener(this);
+//        adapter.notifyDataSetChanged();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        FavoritesFragmentManager.removeOnFavoritesChangedListener(this);
+    }
+
+    @Override
+    public void onFavoritesChanged() {
+        favoriteProducts.clear();
+        favoriteProducts.addAll(FavoritesFragmentManager.getFavoriteProducts());
+        adapter.notifyDataSetChanged();
     }
 }
