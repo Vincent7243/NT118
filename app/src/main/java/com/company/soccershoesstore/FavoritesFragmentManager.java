@@ -26,6 +26,23 @@ import java.util.List;
 
 public class FavoritesFragmentManager {
     private static List<AllCategoryFragmentProduct> favoriteProducts = new ArrayList<>();
+    private static List<OnFavoritesChangedListener> listeners = new ArrayList<>();
+
+    public interface OnFavoritesChangedListener {
+        void onFavoritesChanged();
+    }
+    public static void addOnFavoritesChangedListener(OnFavoritesChangedListener listener) {
+        listeners.add(listener);
+    }
+    public static void removeOnFavoritesChangedListener(OnFavoritesChangedListener listener) {
+        listeners.remove(listener);
+    }
+
+    private static void notifyFavoritesChanged() {
+        for (OnFavoritesChangedListener listener : listeners) {
+            listener.onFavoritesChanged();
+        }
+    }
 
     public static boolean isProductInFavorites(AllCategoryFragmentProduct product) {
         return favoriteProducts.contains(product);
@@ -35,12 +52,14 @@ public class FavoritesFragmentManager {
         if (!favoriteProducts.contains(product)) {
             favoriteProducts.add(product);
             Log.d("FavoritesManager", "Product added to favorites: " + product.getName());
+            notifyFavoritesChanged();
         }
     }
 
     public static void removeProductFromFavorites(AllCategoryFragmentProduct product) {
         favoriteProducts.remove(product);
-        Log.d("FavoritesManager", "Product removed from favorites: " + product.getName());
+        //Log.d("FavoritesManager", "Product removed from favorites: " + product.getName());
+        notifyFavoritesChanged();
     }
 
     public static List<AllCategoryFragmentProduct> getFavoriteProducts() {
