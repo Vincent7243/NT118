@@ -1,5 +1,6 @@
 package com.company.soccershoesstore;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -11,10 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -30,10 +27,15 @@ import java.util.List;
 public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategoryFragmentAdapter.ViewHolder> {
 
     private List<AllCategoryFragmentProduct> products;
+    private Context context;
     //private boolean isFilled = false;
 
-    public AllCategoryFragmentAdapter(List<AllCategoryFragmentProduct> products) {
+    public AllCategoryFragmentAdapter(List<AllCategoryFragmentProduct> products, Context context) {
         this.products = products;
+        this.context = this.context;
+
+        FavoritesFragmentManager.initialize(context);
+
     }
 
     @NonNull
@@ -136,11 +138,11 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
 
                 if (isFavorite) {
                     // Nếu sản phẩm đã có trong danh sách yêu thích, xóa nó khỏi danh sách
-                    FavoritesFragmentManager.removeProductFromFavorites(product);
+                    FavoritesFragmentManager.removeProductFromFavorites(product, context);
                     holder.favoriteButton.setBackground(outlineHeart);
                 } else {
                     // Nếu sản phẩm chưa có trong danh sách yêu thích, thêm nó vào danh sách
-                    FavoritesFragmentManager.addProductToFavorites(product);
+                    FavoritesFragmentManager.addProductToFavorites(product, context);
                     holder.favoriteButton.setBackground(filledHeart);
                 }
 //                notifyItemRemoved(position);
