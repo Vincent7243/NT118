@@ -56,6 +56,13 @@ public class AllCategoryFragment extends Fragment {
 
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Làm mới danh sách sản phẩm khi fragment được hiển thị lại
+        String brand = getArguments().getString("brand");
+        fetchProductsByBrand(brand);
+    }
 
     private void fetchProductsByBrand(String brand) {
         Log.d("FETCH_PRODUCTS", "Fetching products for brand: " + brand);

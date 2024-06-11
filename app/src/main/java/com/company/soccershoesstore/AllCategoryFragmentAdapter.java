@@ -30,7 +30,7 @@ import java.util.List;
 public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategoryFragmentAdapter.ViewHolder> {
 
     private List<AllCategoryFragmentProduct> products;
-    private boolean isFilled = false;
+    //private boolean isFilled = false;
 
     public AllCategoryFragmentAdapter(List<AllCategoryFragmentProduct> products) {
         this.products = products;
@@ -143,8 +143,8 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
                     FavoritesFragmentManager.addProductToFavorites(product);
                     holder.favoriteButton.setBackground(filledHeart);
                 }
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, products.size());
+//                notifyItemRemoved(position);
+//                notifyItemRangeChanged(position, products.size());
 
                 // Chuyển đổi sang FavoritesFragment
 //                Fragment favoritesFragment = new FavoritesFragment();
@@ -160,6 +160,9 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
 //                    transaction.addToBackStack(null);
 //                    transaction.commit();
 //                }
+
+                // Cập nhật lại adapter ngay lập tức
+                notifyDataSetChanged();
             }
         });
     }
