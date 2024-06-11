@@ -30,7 +30,7 @@ import java.util.List;
 public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategoryFragmentAdapter.ViewHolder> {
 
     private List<AllCategoryFragmentProduct> products;
-    private boolean isFilled = false;
+    //private boolean isFilled = false;
 
     public AllCategoryFragmentAdapter(List<AllCategoryFragmentProduct> products) {
         this.products = products;
@@ -118,14 +118,18 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
                 notifyDataSetChanged();
             }
         });
-
+        // Thực hiện kiểm tra trạng thái yêu thích
+        boolean isFavorite = FavoritesFragmentManager.isProductInFavorites(product);
+        Drawable filledHeart = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_love_fill);
+        Drawable outlineHeart = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_love);
+        holder.favoriteButton.setBackground(isFavorite ? filledHeart : outlineHeart);
         holder.favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // Thực hiện chuyển đổi giữa hình ảnh background cho nút favorite
-                Drawable filledHeart = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_love_fill);
-                Drawable outlineHeart = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_love);
+//                Drawable filledHeart = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_love_fill);
+//                Drawable outlineHeart = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_love);
 
                 // Kiểm tra xem sản phẩm đã có trong danh sách yêu thích chưa
                 boolean isFavorite = FavoritesFragmentManager.isProductInFavorites(product);
@@ -139,21 +143,26 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
                     FavoritesFragmentManager.addProductToFavorites(product);
                     holder.favoriteButton.setBackground(filledHeart);
                 }
+//                notifyItemRemoved(position);
+//                notifyItemRangeChanged(position, products.size());
 
                 // Chuyển đổi sang FavoritesFragment
-                Fragment favoritesFragment = new FavoritesFragment();
-                FragmentActivity activity = null;
-                if (v.getContext() instanceof FragmentActivity) {
-                    activity = (FragmentActivity) v.getContext();
-                }
+//                Fragment favoritesFragment = new FavoritesFragment();
+//                FragmentActivity activity = null;
+//                if (v.getContext() instanceof FragmentActivity) {
+//                    activity = (FragmentActivity) v.getContext();
+//                }
+//
+//                if (activity != null) {
+//                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+//                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                    transaction.replace(R.id.fragment_fav_container, favoritesFragment);
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+//                }
 
-                if (activity != null) {
-                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.replace(R.id.fragment_fav_container, favoritesFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }
+                // Cập nhật lại adapter ngay lập tức
+                notifyDataSetChanged();
             }
         });
     }

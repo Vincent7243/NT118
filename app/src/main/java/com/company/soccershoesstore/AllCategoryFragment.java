@@ -22,7 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllCategoryFragment extends Fragment {
+public class AllCategoryFragment extends Fragment implements FavoritesFragmentManager.OnFavoritesChangedListener {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RecyclerView recyclerView;
@@ -55,6 +55,17 @@ public class AllCategoryFragment extends Fragment {
         fetchProductsByBrand(brand);
 
         return view;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        FavoritesFragmentManager.addOnFavoritesChangedListener((FavoritesFragmentManager.OnFavoritesChangedListener) this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        FavoritesFragmentManager.removeOnFavoritesChangedListener((FavoritesFragmentManager.OnFavoritesChangedListener) this);
     }
 
     private void fetchProductsByBrand(String brand) {
@@ -103,6 +114,8 @@ public class AllCategoryFragment extends Fragment {
                     }
                 });
     }
-
-
+    @Override
+    public void onFavoritesChanged() {
+        adapter.notifyDataSetChanged();
+    }
 }

@@ -34,18 +34,20 @@ public class AdapterAdminStaticUser extends ArrayAdapter<String> {
         TextView tv_id=convertView.findViewById(R.id.tv_item_admin_static_id_user);
         TextView tv_name=convertView.findViewById(R.id.tv_item_admin_static_name_user);
         TextView tv_total=convertView.findViewById(R.id.tv_item_admin_static_total_user);
-        tv_id.setText(mid);
-        getname(tv_name,mid);
+        TextView tv_phone=convertView.findViewById(R.id.tv_item_admin_static_phone_user);
+        tv_id.setText("ID: "+mid);
+        getname(tv_name,tv_phone,mid);
         gettotal(tv_total,mid);
         return convertView;
     }
-    public void getname(TextView tv,String mid) {
+    public void getname(TextView tv,TextView tvphone,String mid) {
         FirebaseFirestore.getInstance().collection("users").document(mid)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        tv.setText(documentSnapshot.get("name").toString());
+                        tv.setText("Name: "+documentSnapshot.get("name").toString());
+                        tvphone.setText("Phone: "+documentSnapshot.get("phonenum").toString());
                     }
                 });
     }
@@ -62,7 +64,7 @@ public class AdapterAdminStaticUser extends ArrayAdapter<String> {
                         for(DocumentSnapshot documentSnapshot:queryDocumentSnapshots) {
                             total+=Long.parseLong(documentSnapshot.get("total").toString());
                         }
-                        tv.setText(CardProductAdapter.formatCurrency(total.toString()));
+                        tv.setText("Total: "+CardProductAdapter.formatCurrency(total.toString()));
                     }
                 });
     }
