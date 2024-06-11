@@ -2,6 +2,7 @@ package com.company.soccershoesstore;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -98,6 +99,7 @@ public class activity_admin_sale_edit extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d("addsale", "DocumentSnapshot successfully written!");
+                        addNotification(code,price);
                         Toast.makeText(getApplicationContext(),"Add sale succesful!",Toast.LENGTH_SHORT).show();
                         goToSale();
                     }
@@ -140,5 +142,14 @@ public class activity_admin_sale_edit extends AppCompatActivity {
 
     public void goToSale() {
         onBackPressed();
+    }
+    public void addNotification(String icode,String price) {
+        Map<String, Object> product = new HashMap<>();
+        product.put("content", "Using our newest voucher "+icode+" to get a discount at "+CardProductAdapter.formatCurrency(price)+" right now! Only a few voucher left!");
+        product.put("type", "voucher");
+
+
+        db.collection("notification").document("z"+System.currentTimeMillis())
+                .set(product);
     }
 }
