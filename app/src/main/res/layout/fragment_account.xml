@@ -35,7 +35,7 @@
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
-                            android:layout_height="220dp"
+                            android:layout_height="300dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="10dp"
@@ -47,7 +47,7 @@
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="30dp"
+                                android:layout_marginBottom="10dp"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -59,12 +59,42 @@
                                     android:textSize="20dp" />
 
                                 <TextView
-                                    android:id="@+id/txt_user_home"
+                                    android:id="@+id/txt_user_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
                                     android:gravity="center"
-                                    android:text="Bùi Thanh Tuyền"
+                                    android:text="Nguyễn Tiến Đạt"
+                                    android:textColor="@color/white"
+                                    android:textSize="25dp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/txt_user_phonenum"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:gravity="center"
+                                    android:text="Nguyễn Tiến Đạt"
+                                    android:textColor="@color/white"
+                                    android:textSize="25dp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/txt_user_address"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:gravity="center"
+                                    android:text="Nguyễn Tiến Đạt"
+                                    android:textColor="@color/white"
+                                    android:textSize="25dp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/txt_user_email"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:gravity="center"
+                                    android:text="Nguyễn Tiến Đạt"
                                     android:textColor="@color/white"
                                     android:textSize="25dp"
                                     android:textStyle="bold" />
@@ -126,7 +156,7 @@
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <ImageView
+                            <ImageButton
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:src="@drawable/ic_baseline_shopping_cart_24"
@@ -153,7 +183,7 @@
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <ImageView
+                            <ImageButton
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:src="@drawable/ic_baseline_password_24"
@@ -181,7 +211,7 @@
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <ImageView
+                            <ImageButton
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:src="@drawable/ic_baseline_logout_24"
