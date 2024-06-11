@@ -83,7 +83,7 @@ public class AdminStaticFragment extends Fragment {
                         for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                             tt += Long.parseLong(documentSnapshot.get("quan").toString());
                         }
-                        products.add(new ItemProductStaticAdmin(mid,tt,name));
+                        products.add(new ItemProductStaticAdmin(mid,tt,name ));
                         sortDescendingByNum(products);
                         adapterProductStaticAdmin.notifyDataSetChanged();
 //                        products.forEach(itemProductStaticAdmin -> Log.d("itemProduct",itemProductStaticAdmin.getNum()+""));
