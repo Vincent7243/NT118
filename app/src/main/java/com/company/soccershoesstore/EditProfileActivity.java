@@ -53,7 +53,7 @@ public class EditProfileActivity extends AppCompatActivity {
         Map<String, Object> user = new HashMap<>();
         user.put("name", name);
         user.put("email", email);
-        user.put("phoneNum", phoneNum);
+        user.put("phonenum", phoneNum);
         user.put("address", address);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();

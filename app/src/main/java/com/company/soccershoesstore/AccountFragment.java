@@ -70,7 +70,7 @@ public class AccountFragment extends Fragment {
                                                        if (document.exists()) {
                                                            String name = document.getString("name");
                                                            String email = document.getString("email");
-                                                           String phoneNum = document.getString("phoneNum");
+                                                           String phoneNum = document.getString("phonenum");
                                                            String address = document.getString("address");
 
                                                            tvName.setText(name);
