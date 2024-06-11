@@ -64,6 +64,8 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.android.material:material:1.3.0-alpha03")
     implementation ("com.squareup.picasso:picasso:2.8")
+    implementation ("com.google.code.gson:gson:2.9.0")
+
 
 
 
