@@ -1,14 +1,24 @@
 package com.company.soccershoesstore;
 
 public class CartItem {
+    String idCart;
     String idProduct;
     String quan;
     String total;
 
-    public CartItem(String idProduct, String quan, String total) {
+    public CartItem(String idCart, String idProduct, String quan, String total) {
+        this.idCart = idCart;
         this.idProduct = idProduct;
         this.quan = quan;
         this.total = total;
+    }
+
+    public String getIdCart() {
+        return idCart;
+    }
+
+    public void setIdCart(String idCart) {
+        this.idCart = idCart;
     }
 
     public String getIdProduct() {

@@ -9,13 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -221,7 +218,7 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
             productImage = itemView.findViewById(R.id.product_image);
             increasePriceButton = itemView.findViewById(R.id.increase_price_button);
             decreasePriceButton = itemView.findViewById(R.id.decrease_price_button);
-            favoriteButton = itemView.findViewById(R.id.favorite_button);
+            favoriteButton = itemView.findViewById(R.id.btn_detail_favorite);
             ll=itemView.findViewById(R.id.item_all_cat_frag_product);
         }
     }

@@ -19,7 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity implements AdapterCartItem.OnCartItemChangeListener {
     ListView lv;
     TextView tvToal;
     Button btnCheckout;
@@ -44,6 +44,33 @@ public class CartActivity extends AppCompatActivity {
         tvToal=findViewById(R.id.tv_cart_total_all);
         btnCheckout=findViewById(R.id.btn_cart_checkout);
         cartItems=new ArrayList<>();
+
+        adapterCartItem=new AdapterCartItem(this,R.layout.item_cart,cartItems);
+
+        lv.setAdapter(adapterCartItem);
+
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Xử lý sự kiện khi người dùng nhấn nút back
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // Đóng activity hiện tại và quay về activity trước đó
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    void getData() {
+        cartItems.clear();
         FirebaseFirestore.getInstance().collection("cart_items")
                 .whereEqualTo("id_user", FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .get()
@@ -53,28 +80,17 @@ public class CartActivity extends AppCompatActivity {
                         long totallall=0;
                         for (DocumentSnapshot documentSnapshot:queryDocumentSnapshots) {
                             totallall+=Long.parseLong(documentSnapshot.get("total").toString());
-                            cartItems.add(new CartItem(documentSnapshot.get("id_product").toString(),documentSnapshot.get("quan").toString(),documentSnapshot.get("total").toString()));
+                            cartItems.add(new CartItem(documentSnapshot.getId(),documentSnapshot.get("id_product").toString(),documentSnapshot.get("quan").toString(),documentSnapshot.get("total").toString()));
                         }
                         adapterCartItem.notifyDataSetChanged();
                         tvToal.setText(CardProductAdapter.formatCurrency(totallall+""));
                     }
                 });
-        adapterCartItem=new AdapterCartItem(this,R.layout.item_cart,cartItems);
-
-        lv.setAdapter(adapterCartItem);
-
-
-
-
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Xử lý sự kiện khi người dùng nhấn nút back
-        if (item.getItemId() == android.R.id.home) {
-            finish(); // Đóng activity hiện tại và quay về activity trước đó
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void onCartItemChanged() {
+        getData();
     }
 
 }

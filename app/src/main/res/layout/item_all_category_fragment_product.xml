@@ -32,7 +32,7 @@
 
         <!-- Nút favorite -->
         <Button
-            android:id="@+id/favorite_button"
+            android:id="@+id/btn_detail_favorite"
             android:layout_width="50dp"
             android:layout_height="47dp"
             android:background="@drawable/ic_love"

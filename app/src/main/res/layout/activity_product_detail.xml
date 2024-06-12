@@ -92,7 +92,7 @@
             android:weightSum="20">
 
             <Button
-                android:id="@+id/favorite_button"
+                android:id="@+id/btn_detail_favorite"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
@@ -106,7 +106,7 @@
                 app:iconTint="@color/home" />
 
             <Button
-                android:id="@+id/favorite_buttonn"
+                android:id="@+id/btn_detail_addtocart"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
@@ -120,7 +120,7 @@
                 app:iconTint="@color/home" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btn_detail_checkout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
