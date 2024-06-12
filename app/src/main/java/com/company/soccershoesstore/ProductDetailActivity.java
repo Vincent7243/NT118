@@ -1,8 +1,10 @@
 package com.company.soccershoesstore;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -29,6 +32,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProductDetailActivity extends AppCompatActivity {
@@ -37,6 +41,10 @@ public class ProductDetailActivity extends AppCompatActivity {
     ImageView iv;
     ImageButton ib_back;
     Button btn_favorite,btn_addtocart,btn_checkout;
+    List list1;
+
+    boolean isFavorite,inCart ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +59,13 @@ public class ProductDetailActivity extends AppCompatActivity {
         ib_back=findViewById(R.id.ib_detailProduct_back);
         btn_favorite=findViewById(R.id.btn_detail_favorite);
         btn_addtocart=findViewById(R.id.btn_detail_addtocart);
+        list1=FavoritesFragmentManager.getFavoriteProducts();
         btn_checkout=findViewById(R.id.btn_detail_checkout);
-
+        isFavorite=false;
+        inCart=false;
         tvdescription.setMovementMethod(new ScrollingMovementMethod());
-
+        checkFavorite();
+        checkInCart();
         FirebaseFirestore.getInstance().collection("Products").document(idproduct)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -86,7 +97,48 @@ public class ProductDetailActivity extends AppCompatActivity {
         btn_addtocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToCart(idproduct, FirebaseAuth.getInstance().getCurrentUser().getUid().toString(),price);
+                if(!inCart) {
+                    addToCart(idproduct, FirebaseAuth.getInstance().getCurrentUser().getUid().toString(),price);
+                    inCart=true;
+                    Drawable drawable = ContextCompat.getDrawable(ProductDetailActivity.this, R.drawable.ic_cart_fill_home);
+                    btn_addtocart.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+                }else {
+                    Toast.makeText(getApplicationContext(),"This product is already in the cart! ",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        
+        btn_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FirebaseFirestore.getInstance().collection("Products").document(idproduct)
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot document) {
+                                AllCategoryFragmentProduct product = document.toObject(AllCategoryFragmentProduct.class);
+//                                boolean isFavorite = FavoritesFragmentManager.isProductInFavorites(product);
+                                if (isFavorite) {
+                                    // Nếu sản phẩm đã có trong danh sách yêu thích, xóa nó khỏi danh sách
+                                    Toast.makeText(getApplicationContext(),"This product is already in the favorites list!",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // Nếu sản phẩm chưa có trong danh sách yêu thích, thêm nó vào danh sách
+                                    isFavorite=true;
+                                    FavoritesFragmentManager.addProductToFavorites(product, getApplicationContext());
+                                    Toast.makeText(getApplicationContext(),"Added in the favorites list!",Toast.LENGTH_SHORT).show();
+                                    list1.add(product);
+                                    Drawable drawable = ContextCompat.getDrawable(ProductDetailActivity.this, R.drawable.ic_love_fill);
+                                    btn_favorite.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+                                }
+
+
+                            }
+                        });
+
+
+
+
             }
         });
     }
@@ -118,4 +170,58 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
     }
+    void checkFavorite() {
+        FirebaseFirestore.getInstance().collection("Products").document(idproduct)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot document) {
+                        AllCategoryFragmentProduct product = document.toObject(AllCategoryFragmentProduct.class);
+//                                boolean isFavorite = FavoritesFragmentManager.isProductInFavorites(product);
+                        for (Object item : list1) {
+                            if (item instanceof AllCategoryFragmentProduct) {
+                                AllCategoryFragmentProduct favProduct = (AllCategoryFragmentProduct) item;
+                                if (favProduct.getImage().equals(product.getImage())) {
+                                    isFavorite = true;
+
+                                    break;
+                                }
+                            }
+                        }
+                        if(isFavorite) {
+                            Drawable drawable = ContextCompat.getDrawable(ProductDetailActivity.this, R.drawable.ic_love_fill);
+                            btn_favorite.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+                        }
+                        else {
+                            Drawable drawable = ContextCompat.getDrawable(ProductDetailActivity.this, R.drawable.ic_lovecart);
+                            btn_favorite.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+                        }
+
+
+                    }
+                });
+    }
+    void checkInCart() {
+        Log.d("test1234",FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Log.d("test1234",idproduct);
+        FirebaseFirestore.getInstance().collection("cart_items")
+                .whereEqualTo("id_user",FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .whereEqualTo("id_product",idproduct)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if(!queryDocumentSnapshots.isEmpty()) {
+                            inCart=true;
+                            Drawable drawable = ContextCompat.getDrawable(ProductDetailActivity.this, R.drawable.ic_cart_fill_home);
+                            btn_addtocart.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+                        }else  {
+                            Drawable drawable = ContextCompat.getDrawable(ProductDetailActivity.this, R.drawable.ic_cart_home);
+                            btn_addtocart.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+                        }
+                    }
+                });
+
+    }
+    
 }

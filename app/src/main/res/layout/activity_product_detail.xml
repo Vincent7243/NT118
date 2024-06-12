@@ -101,9 +101,7 @@
                 android:text="Favorite"
                 android:textColor="@color/home"
                 android:textSize="13sp"
-                app:icon="@drawable/ic_love"
-                app:iconSize="30dp"
-                app:iconTint="@color/home" />
+                 />
 
             <Button
                 android:id="@+id/btn_detail_addtocart"
@@ -115,9 +113,7 @@
                 android:text="Add to cart"
                 android:textColor="@color/home"
                 android:textSize="13sp"
-                app:icon="@drawable/ic_cart"
-                app:iconSize="30dp"
-                app:iconTint="@color/home" />
+                 />
 
             <Button
                 android:id="@+id/btn_detail_checkout"
