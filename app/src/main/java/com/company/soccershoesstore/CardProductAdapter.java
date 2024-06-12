@@ -1,6 +1,7 @@
 package com.company.soccershoesstore;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,6 +80,14 @@ public class CardProductAdapter extends RecyclerView.Adapter<CardProductAdapter.
            String price= productCard.getPrice();
            price=formatCurrency(price);
            holder.price.setText(price);
+           holder.ll.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   Intent intent=new Intent(mcontext,ProductDetailActivity.class);
+                   intent.putExtra("idproduct",productCard.getId());
+                   mcontext.startActivity(intent);
+               }
+           });
 
 
     }
@@ -89,6 +98,7 @@ public class CardProductAdapter extends RecyclerView.Adapter<CardProductAdapter.
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
+        LinearLayout ll;
         private TextView price;
         ImageView iv;
 
@@ -97,6 +107,7 @@ public class CardProductAdapter extends RecyclerView.Adapter<CardProductAdapter.
             iv = itemView.findViewById(R.id.iv_home_cardproduct);
             price = itemView.findViewById(R.id.tv_price_productcard);
             title = itemView.findViewById(R.id.tv_title_productcard);
+            ll=itemView.findViewById(R.id.ll_cardproduct);
         }
     }
     public static String formatCurrency(String numberString) {
