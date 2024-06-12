@@ -1,6 +1,7 @@
 package com.company.soccershoesstore;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -8,15 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -167,6 +175,24 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
                 notifyDataSetChanged();
             }
         });
+        holder.ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseFirestore.getInstance().collection("Products")
+                        .whereEqualTo("description",product.getDescription())
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                DocumentSnapshot snapshot=queryDocumentSnapshots.getDocuments().get(0);
+                                String mid=snapshot.getId();
+                                Intent intent=new Intent(v.getContext(),ProductDetailActivity.class);
+                                intent.putExtra("idproduct",mid);
+                                v.getContext().startActivity(intent);
+                            }
+                        });
+            }
+        });
     }
 
     @Override
@@ -184,6 +210,7 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
         public Button increasePriceButton;
         public Button decreasePriceButton;
         public Button favoriteButton;
+        ConstraintLayout ll;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -195,6 +222,7 @@ public class AllCategoryFragmentAdapter extends RecyclerView.Adapter<AllCategory
             increasePriceButton = itemView.findViewById(R.id.increase_price_button);
             decreasePriceButton = itemView.findViewById(R.id.decrease_price_button);
             favoriteButton = itemView.findViewById(R.id.favorite_button);
+            ll=itemView.findViewById(R.id.item_all_cat_frag_product);
         }
     }
 }
