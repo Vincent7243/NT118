@@ -97,7 +97,8 @@ public class AllCategoryFragment extends Fragment implements FavoritesFragmentMa
         Log.d("SEARCH", "Searching for: " + query);
         db.collection("Products")
                 .whereEqualTo("brand", getArguments().getString("brand"))
-                .whereEqualTo("name", query)
+                .whereGreaterThanOrEqualTo("name", query)
+                .whereLessThanOrEqualTo("name", query + '\uf8ff')
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -116,6 +117,8 @@ public class AllCategoryFragment extends Fragment implements FavoritesFragmentMa
                     }
                 });
     }
+
+
     @Override
     public void onFavoritesChanged() {
         adapter.notifyDataSetChanged();

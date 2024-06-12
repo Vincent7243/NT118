@@ -217,7 +217,7 @@ public class BottomNavigationBar_and_TopNav extends AppCompatActivity {
         return true;
     }
     private void performSearch(String query) {
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.all_fragment_category); // Chú ý ID của fragment container
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.all_fragment_category);
 
         if (currentFragment instanceof AllCategoryFragment) {
             ((AllCategoryFragment) currentFragment).searchProducts(query);
@@ -225,6 +225,8 @@ public class BottomNavigationBar_and_TopNav extends AppCompatActivity {
             Log.d("SEARCH", "Current fragment is not AllCategoryFragment");
         }
     }
+
+
 
 
     @Override

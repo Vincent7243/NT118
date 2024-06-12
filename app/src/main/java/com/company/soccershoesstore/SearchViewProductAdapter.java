@@ -16,9 +16,9 @@ import java.util.List;
 
 public class SearchViewProductAdapter extends RecyclerView.Adapter<SearchViewProductAdapter.ProductViewHolder> {
     private Context context;
-    private List<SearchViewProduct> productList;
+    private List<AllCategoryFragmentProduct> productList;
 
-    public SearchViewProductAdapter(Context context, List<SearchViewProduct> productList) {
+    public SearchViewProductAdapter(Context context, List<AllCategoryFragmentProduct> productList) {
         this.context = context;
         this.productList = productList;
     }
@@ -32,7 +32,7 @@ public class SearchViewProductAdapter extends RecyclerView.Adapter<SearchViewPro
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        SearchViewProduct product = productList.get(position);
+        AllCategoryFragmentProduct product = productList.get(position);
         holder.productName.setText(product.getName());
         holder.productPrice.setText(product.getPrice());
         Glide.with(context).load(product.getImage()).into(holder.productImage); // Using Glide to load images
@@ -55,4 +55,5 @@ public class SearchViewProductAdapter extends RecyclerView.Adapter<SearchViewPro
         }
     }
 }
+
 
