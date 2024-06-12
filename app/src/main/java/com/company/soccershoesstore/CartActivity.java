@@ -2,12 +2,29 @@ package com.company.soccershoesstore;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+
 public class CartActivity extends AppCompatActivity {
+    ListView lv;
+    TextView tvToal;
+    Button btnCheckout;
+    AdapterCartItem adapterCartItem;
+    ArrayList<CartItem> cartItems;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +39,33 @@ public class CartActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle("Cart"); // Đặt tiêu đề là "Chat"
         }
+
+        lv=findViewById(R.id.lv_cart);
+        tvToal=findViewById(R.id.tv_cart_total_all);
+        btnCheckout=findViewById(R.id.btn_cart_checkout);
+        cartItems=new ArrayList<>();
+        FirebaseFirestore.getInstance().collection("cart_items")
+                .whereEqualTo("id_user", FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        long totallall=0;
+                        for (DocumentSnapshot documentSnapshot:queryDocumentSnapshots) {
+                            totallall+=Long.parseLong(documentSnapshot.get("total").toString());
+                            cartItems.add(new CartItem(documentSnapshot.get("id_product").toString(),documentSnapshot.get("quan").toString(),documentSnapshot.get("total").toString()));
+                        }
+                        adapterCartItem.notifyDataSetChanged();
+                        tvToal.setText(CardProductAdapter.formatCurrency(totallall+""));
+                    }
+                });
+        adapterCartItem=new AdapterCartItem(this,R.layout.item_cart,cartItems);
+
+        lv.setAdapter(adapterCartItem);
+
+
+
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

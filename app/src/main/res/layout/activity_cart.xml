@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_cart"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/home"
-    android:id="@+id/activity_cart">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/cart_toolbar"
@@ -17,7 +17,64 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        app:titleTextColor="#F6F4F4" />
+
+    <ListView
+        android:id="@+id/lv_cart"
+        android:layout_width="0dp"
+        android:layout_height="560dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cart_toolbar" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lv_cart">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:orientation="vertical"
+            android:weightSum="10">
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="Total"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_cart_total_all"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="TextView"
+                android:textColor="#DD1010"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_cart_checkout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="4"
+            android:text="Checkout" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
