@@ -1,5 +1,6 @@
 package com.company.soccershoesstore;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -105,6 +106,32 @@ public class ProductDetailActivity extends AppCompatActivity {
                 }else {
                     Toast.makeText(getApplicationContext(),"This product is already in the cart! ",Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        btn_checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.getResult().get("address").toString().equals("NULL")||task.getResult().get("phonenum").toString().equals("NULL")) {
+                                    Toast.makeText(ProductDetailActivity.this, "Please fill in all your information before checking out!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Intent intent=new Intent(ProductDetailActivity.this,CheckoutActivity.class);
+                                    intent.putExtra("buynow","dotrongnhan");
+                                    intent.putExtra("total",price);
+                                    intent.putExtra("idproduct",idproduct);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+
+
+
             }
         });
         

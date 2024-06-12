@@ -1,6 +1,8 @@
 package com.company.soccershoesstore;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -59,6 +61,7 @@ public class AdapterCartItem extends ArrayAdapter<CartItem> {
         TextView tvtotal=convertView.findViewById(R.id.tv_cart_item_total);
         ImageButton ib_incre=convertView.findViewById(R.id.ib_cart_item_incre);
         ImageButton ib_decre=convertView.findViewById(R.id.ib_cart_item_decre);
+        ImageButton ib_delete=convertView.findViewById(R.id.ib_cart_item_delete);
         tvtotal.setText(CardProductAdapter.formatCurrency(cartItem.getTotal()));
         tvquan.setText(cartItem.getQuan());
         iv.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +85,23 @@ public class AdapterCartItem extends ArrayAdapter<CartItem> {
             public void onClick(View v) {
                 decrementQuantity(cartItem);
             }
+        });
+        ib_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(mcontext)
+                        .setTitle("Delete confirm")
+                        .setMessage("Are you sure you want to delete this product from cart?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteItemCart(cartItem.getIdCart());
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(R.drawable.warning)
+                        .show();
+            }
+
         });
         return convertView;
     }
@@ -147,7 +167,17 @@ public class AdapterCartItem extends ArrayAdapter<CartItem> {
 
     private void decrementQuantity(CartItem cartItem) {
         if(cartItem.getQuan().equals("1")) {
-            Toast.makeText(mcontext, "xuly sau", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(mcontext)
+                    .setTitle("Delete confirm")
+                    .setMessage("Are you sure you want to delete this product from cart?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteItemCart(cartItem.getIdCart());
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(R.drawable.warning)
+                    .show();
         }else {
             Map<String, Object> product = new HashMap<>();
             product.put("id_product", cartItem.getIdProduct());
@@ -166,6 +196,7 @@ public class AdapterCartItem extends ArrayAdapter<CartItem> {
                                         @Override
                                         public void onSuccess(Void unused) {
                                             cartItemChangeListener.onCartItemChanged();
+
                                             Toast.makeText(mcontext,"Decreased!",Toast.LENGTH_SHORT).show();
                                         }
                                     });
@@ -174,5 +205,16 @@ public class AdapterCartItem extends ArrayAdapter<CartItem> {
         }
 
 
+    }
+    public void deleteItemCart(String midCart) {
+        FirebaseFirestore.getInstance().collection("cart_items").document(midCart)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(mcontext,"Deleted item cart",Toast.LENGTH_SHORT).show();
+                        cartItemChangeListener.onCartItemChanged();
+                    }
+                });
     }
 }

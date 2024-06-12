@@ -1,17 +1,23 @@
 package com.company.soccershoesstore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -43,6 +49,7 @@ public class CartActivity extends AppCompatActivity implements AdapterCartItem.O
         lv=findViewById(R.id.lv_cart);
         tvToal=findViewById(R.id.tv_cart_total_all);
         btnCheckout=findViewById(R.id.btn_cart_checkout);
+
         cartItems=new ArrayList<>();
 
         adapterCartItem=new AdapterCartItem(this,R.layout.item_cart,cartItems);
@@ -84,6 +91,26 @@ public class CartActivity extends AppCompatActivity implements AdapterCartItem.O
                         }
                         adapterCartItem.notifyDataSetChanged();
                         tvToal.setText(CardProductAdapter.formatCurrency(totallall+""));
+                        long finalTotallall = totallall;
+                        btnCheckout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if(task.getResult().get("address").toString().equals("NULL")||task.getResult().get("phonenum").toString().equals("NULL")) {
+                                                    Toast.makeText(CartActivity.this, "Please fill in all your information before checking out!", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Intent intent=new Intent(CartActivity.this,CheckoutActivity.class);
+                                                    intent.putExtra("total", finalTotallall +"");
+                                                    startActivity(intent);
+                                                }
+                                            }
+                                        });
+                            }
+                        });
                     }
                 });
     }
@@ -92,5 +119,6 @@ public class CartActivity extends AppCompatActivity implements AdapterCartItem.O
     public void onCartItemChanged() {
         getData();
     }
+
 
 }
