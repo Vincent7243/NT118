@@ -14,8 +14,6 @@ public class OrderStatusActivity extends AppCompatActivity {
     private ApprovedFragment approvedFragment;
     private CancelledFragment cancelledFragment;
 
-    private ArrayList<Product> mWaitingProducts = new ArrayList<>();
-    private ArrayList<Product> mCancelledProducts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

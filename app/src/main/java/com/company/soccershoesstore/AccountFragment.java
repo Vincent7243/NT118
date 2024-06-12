@@ -22,7 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class AccountFragment extends Fragment {
     private TextView tvName, tvEmail, tvPhoneNum, tvAddress;
     private FirebaseFirestore firestore;
-
     private ImageButton imgDoiten;
     private ImageButton imgTTDH;
 
@@ -37,9 +36,9 @@ public class AccountFragment extends Fragment {
         tvPhoneNum = view.findViewById(R.id.txt_user_phonenum);
         tvAddress = view.findViewById(R.id.txt_user_address);
         firestore = FirebaseFirestore.getInstance();
-
         loadUserProfile();
         goToActivity();
+        goToTTDH();
         return view;
     }
 
@@ -48,11 +47,12 @@ public class AccountFragment extends Fragment {
             Intent intent = new Intent(getActivity(), EditProfileActivity.class);
             startActivity(intent);
         });
-
+    }
+    public void goToTTDH() {
         imgTTDH.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), OrderStatusActivity.class);
-            startActivity(intent);
-        });
+           startActivity(intent);
+       });
     }
 
     private void loadUserProfile() {
