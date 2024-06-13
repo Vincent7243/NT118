@@ -102,7 +102,7 @@ public class SignUpScreen extends AppCompatActivity {
                     Toast.makeText(SignUpScreen.this,"Please make sure your password is 6 characters or more ",Toast.LENGTH_SHORT).show();
                     return;
                 }else {
-                    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+(\\.[a-z]+)+";
 
                     // Kiểm tra chuỗi email có khớp với biểu thức chính quy không
                     if(email.matches(emailPattern)) {
