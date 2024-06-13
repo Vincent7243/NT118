@@ -32,28 +32,30 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Chờ duyệt" />
+            android:text="Waiting" />
 
         <Button
             android:id="@+id/btn_approved"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Đã duyệt" />
+            android:text="To ship" />
 
         <Button
             android:id="@+id/btn_cancelled"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Đã     hủy" />
+            android:textSize="12sp"
+            android:text="Cancelled" />
 
         <Button
             android:id="@+id/btn_delivered"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Đã   giao" />
+            android:textSize="11sp"
+            android:text="Completed" />
     </LinearLayout>
 
     <FrameLayout
